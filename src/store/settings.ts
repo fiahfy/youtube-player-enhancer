@@ -16,11 +16,7 @@ export default class SettingsModule extends VuexModule {
     this.seekButtonsEnabled = seekButtonsEnabled
   }
   @Mutation
-  setVideoQualityFixed({
-    videoQualityFixed
-  }: {
-    videoQualityFixed: boolean
-  }) {
+  setVideoQualityFixed({ videoQualityFixed }: { videoQualityFixed: boolean }) {
     this.videoQualityFixed = videoQualityFixed
   }
   @Mutation

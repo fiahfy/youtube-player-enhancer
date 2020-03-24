@@ -10,7 +10,7 @@ module.exports = {
   entry: {
     background: './background',
     'content-script': './content-script',
-    options: './options'
+    popup: './popup'
   },
   output: {
     path: `${__dirname}/app/`,
@@ -74,9 +74,9 @@ module.exports = {
       }
     ]),
     new HtmlWebpackPlugin({
-      template: './options.html',
-      filename: './options.html',
-      chunks: ['options']
+      template: './popup.html',
+      filename: './popup.html',
+      chunks: ['popup']
     }),
     new VueLoaderPlugin(),
     new VuetifyLoaderPlugin()

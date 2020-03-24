@@ -2,7 +2,7 @@
   <v-app>
     <v-content class="fill-height">
       <v-container ref="container" fluid pa-0>
-        <v-subheader>Player Controls</v-subheader>
+        <v-subheader>Player</v-subheader>
         <v-switch
           v-model="seekButtonsEnabled"
           label="Add Buttons for Seeking Forward and Backward"
@@ -15,19 +15,19 @@
           class="mt-0 px-4"
           dense
         />
-        <v-subheader>Chat Controls for YouTube Live</v-subheader>
+        <v-subheader>Chat</v-subheader>
         <v-switch
           v-model="reloadButtonEnabled"
           label="Add Button for Reloading Chat Frame"
           class="mt-0 px-4"
           dense
         />
-        <v-switch
+        <!-- <v-switch
           v-model="forceScrollButtonEnabled"
           label="Add Button for Enabling Force Scroll"
           class="mt-0 px-4"
           dense
-        />
+        /> -->
       </v-container>
     </v-content>
   </v-app>
@@ -38,7 +38,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import { settingsStore } from '~/store'
 
 @Component
-export default class Options extends Vue {
+export default class Popup extends Vue {
   get seekButtonsEnabled() {
     return settingsStore.seekButtonsEnabled
   }
