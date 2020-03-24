@@ -6,11 +6,14 @@
 
 ## Features
 
-- xxx.
+- Add seek buttons on the bottom control.
+- Play video at fixed quality.
+- Add reload button on the chat menu.
 
 ## Screenshots
 
-![screenshot](.github/img/screenshot.png)
+![screenshot](.github/img/screenshot1.png)
+![screenshot](.github/img/screenshot2.png)
 
 ## Installation
 
