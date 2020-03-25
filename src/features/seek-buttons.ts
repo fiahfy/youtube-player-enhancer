@@ -1,5 +1,6 @@
 import { browser } from 'webextension-polyfill-ts'
 import Settings from '~/models/settings'
+import { isVideoUrl } from '~/utils/url'
 import forward from '~/assets/forward.svg'
 import replay from '~/assets/replay.svg'
 
@@ -154,6 +155,9 @@ const enableControls = async () => {
 }
 
 const setup = async () => {
+  if (!isVideoUrl()) {
+    return
+  }
   settings.seekButtonsEnabled ? await enableControls() : disableControls()
 }
 

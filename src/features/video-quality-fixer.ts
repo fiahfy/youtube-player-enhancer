@@ -1,5 +1,6 @@
 import { browser } from 'webextension-polyfill-ts'
 import Settings from '~/models/settings'
+import { isVideoUrl } from '~/utils/url'
 
 const className = 'ype-video-quality-fixing'
 const interval = 100
@@ -107,6 +108,9 @@ const fixQualityLoop = async (): Promise<void> => {
 }
 
 const setup = async (): Promise<void> => {
+  if (!isVideoUrl()) {
+    return
+  }
   if (!settings.videoQualityFixed) {
     return
   }
