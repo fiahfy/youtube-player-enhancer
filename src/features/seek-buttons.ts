@@ -20,7 +20,7 @@ const buttonConfigs: ButtonConfig[] = [
     svg: replay,
     key: 'ArrowLeft',
     code: 'ArrowLeft',
-    keyCode: 37
+    keyCode: 37,
   },
   {
     title: 'Seek forward 5s（→）',
@@ -28,8 +28,8 @@ const buttonConfigs: ButtonConfig[] = [
     svg: forward,
     key: 'ArrowRight',
     code: 'ArrowRight',
-    keyCode: 39
-  }
+    keyCode: 39,
+  },
 ]
 
 const interval = 100
@@ -48,7 +48,7 @@ const createButton = (config: ButtonConfig): HTMLButtonElement => {
       bubbles: true,
       key: config.key,
       code: config.code,
-      keyCode: config.keyCode
+      keyCode: config.keyCode,
     } as any) // eslint-disable-line @typescript-eslint/no-explicit-any
     document.documentElement.dispatchEvent(e)
   }

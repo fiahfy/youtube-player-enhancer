@@ -9,7 +9,7 @@ export default class SettingsModule extends VuexModule {
 
   @Mutation
   setSeekButtonsEnabled({
-    seekButtonsEnabled
+    seekButtonsEnabled,
   }: {
     seekButtonsEnabled: boolean
   }) {
@@ -21,7 +21,7 @@ export default class SettingsModule extends VuexModule {
   }
   @Mutation
   setReloadButtonEnabled({
-    reloadButtonEnabled
+    reloadButtonEnabled,
   }: {
     reloadButtonEnabled: boolean
   }) {
@@ -29,7 +29,7 @@ export default class SettingsModule extends VuexModule {
   }
   @Mutation
   setForceScrollButtonEnabled({
-    forceScrollButtonEnabled
+    forceScrollButtonEnabled,
   }: {
     forceScrollButtonEnabled: boolean
   }) {

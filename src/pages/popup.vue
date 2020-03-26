@@ -44,7 +44,7 @@ export default class Popup extends Vue {
   }
   set seekButtonsEnabled(value) {
     settingsStore.setSeekButtonsEnabled({
-      seekButtonsEnabled: value
+      seekButtonsEnabled: value,
     })
   }
   get videoQualityFixed() {
@@ -52,7 +52,7 @@ export default class Popup extends Vue {
   }
   set videoQualityFixed(value) {
     settingsStore.setVideoQualityFixed({
-      videoQualityFixed: value
+      videoQualityFixed: value,
     })
   }
   get reloadButtonEnabled() {
@@ -60,7 +60,7 @@ export default class Popup extends Vue {
   }
   set reloadButtonEnabled(value) {
     settingsStore.setReloadButtonEnabled({
-      reloadButtonEnabled: value
+      reloadButtonEnabled: value,
     })
   }
   get forceScrollButtonEnabled() {
@@ -68,7 +68,7 @@ export default class Popup extends Vue {
   }
   set forceScrollButtonEnabled(value) {
     settingsStore.setForceScrollButtonEnabled({
-      forceScrollButtonEnabled: value
+      forceScrollButtonEnabled: value,
     })
   }
 }

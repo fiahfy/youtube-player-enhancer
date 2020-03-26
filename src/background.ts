@@ -15,11 +15,7 @@ const getSettings = async () => {
   return JSON.parse(JSON.stringify(store.state.settings))
 }
 
-const contentLoaded = async (tabId?: number, frameId?: number) => {
-  if (!tabId) {
-    return
-  }
-
+const contentLoaded = async (tabId: number, frameId?: number) => {
   const tabState = { ...initialState }
   tabStates = { ...tabStates, [tabId]: tabState }
 
@@ -36,17 +32,17 @@ const updateTabState = async (tabId: number, name: string, value: boolean) => {
   let tabState = tabStates[tabId] ?? { ...initialState }
   tabState = {
     ...tabState,
-    [name]: value
+    [name]: value,
   }
   initialState[name] = tabState[name]
   tabStates = {
     ...tabStates,
-    [tabId]: tabState
+    [tabId]: tabState,
   }
 
   await browser.tabs.sendMessage(tabId, {
     id: 'tabStateChanged',
-    data: { tabState }
+    data: { tabState },
   })
 }
 
@@ -58,7 +54,7 @@ const settingsChanged = async () => {
       tab.id &&
         (await browser.tabs.sendMessage(tab.id, {
           id: 'settingsChanged',
-          data: { settings }
+          data: { settings },
         }))
     } catch (e) {} // eslint-disable-line no-empty
   }
@@ -76,7 +72,7 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
   const { tab, frameId } = sender
   switch (id) {
     case 'contentLoaded':
-      return await contentLoaded(tab?.id, frameId)
+      return tab?.id && (await contentLoaded(tab.id, frameId))
     case 'settingsChanged':
       await settingsChanged()
       break

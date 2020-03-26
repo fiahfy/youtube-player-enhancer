@@ -44,7 +44,7 @@ const addButton = () => {
   iconButton.onclick = () => {
     browser.runtime.sendMessage({
       id: 'updateTabState',
-      data: { name: 'forceScrollEnabled', value: !enabled }
+      data: { name: 'forceScrollEnabled', value: !enabled },
     })
   }
   iconButton.append(icon)
