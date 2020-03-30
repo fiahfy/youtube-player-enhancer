@@ -1,26 +1,29 @@
 <template>
   <v-app>
     <v-content class="fill-height">
-      <v-container ref="container" fluid pa-0>
-        <v-subheader>Player</v-subheader>
+      <v-container fluid>
+        <div class="subtitle-2">Player</div>
         <v-switch
           v-model="seekButtonsEnabled"
           label="Add Buttons for Seeking Forward and Backward"
-          class="mt-0 px-4"
+          hide-details
           dense
+          class="mt-2"
         />
         <v-switch
           v-model="videoQualityFixed"
           label="Always Play at The Highest Video Quality"
-          class="mt-0 px-4"
+          hide-details
           dense
+          class="mt-2"
         />
-        <v-subheader>Chat</v-subheader>
+        <div class="subtitle-2 mt-5">Chat</div>
         <v-switch
           v-model="reloadButtonEnabled"
           label="Add Button for Reloading Chat Frame"
-          class="mt-0 px-4"
+          hide-details
           dense
+          class="mt-2"
         />
         <!-- <v-switch
           v-model="forceScrollButtonEnabled"
