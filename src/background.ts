@@ -1,6 +1,6 @@
 import { browser } from 'webextension-polyfill-ts'
 import { readyStore } from '~/store'
-import iconOn from '~/assets/icon-on.png'
+import icon from '~/assets/icon.png'
 import inject from '~/assets/inject.css'
 
 type TabState = {
@@ -21,14 +21,14 @@ const contentLoaded = async (tabId: number, frameId?: number) => {
 
   const settings = await getSettings()
 
-  await browser.pageAction.setIcon({ tabId, path: iconOn })
+  await browser.pageAction.setIcon({ tabId, path: icon })
   await browser.pageAction.show(tabId)
   await browser.tabs.insertCSS(tabId, { frameId, file: inject })
 
   return { settings, tabState }
 }
 
-const updateTabState = async (tabId: number, name: string, value: boolean) => {
+const tabStateChanged = async (tabId: number, name: string, value: boolean) => {
   let tabState = tabStates[tabId] ?? { ...initialState }
   tabState = {
     ...tabState,
@@ -76,9 +76,9 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
     case 'settingsChanged':
       await settingsChanged()
       break
-    case 'updateTabState': {
+    case 'tabStateChanged': {
       const { name, value } = data
-      tab?.id && (await updateTabState(tab.id, name, value))
+      tab?.id && (await tabStateChanged(tab.id, name, value))
       break
     }
   }

@@ -43,7 +43,7 @@ const addButton = () => {
   iconButton.title = 'Enable Force Scroll'
   iconButton.onclick = () => {
     browser.runtime.sendMessage({
-      id: 'updateTabState',
+      id: 'tabStateChanged',
       data: { name: 'forceScrollEnabled', value: !enabled },
     })
   }
