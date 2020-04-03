@@ -9,12 +9,12 @@
           dense
           class="px-4 mt-0"
         />
-        <v-switch
+        <!-- <v-switch
           v-model="videoQualityFixed"
           label="Always Play at The Highest Video Quality"
           dense
           class="px-4 mt-0"
-        />
+        /> -->
         <v-subheader>Chat</v-subheader>
         <v-switch
           v-model="reloadButtonEnabled"

@@ -7,7 +7,6 @@
 ## Features
 
 - Add seek buttons on the bottom control.
-- Play video at fixed quality.
 - Add reload button on the chat menu.
 
 ## Screenshots
