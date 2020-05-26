@@ -7,7 +7,9 @@
 ## Features
 
 - Add seek buttons on the bottom control.
+- Always show elapsed time.
 - Add reload button on the chat menu.
+- Donot scroll on click timestamp.
 
 ## Screenshots
 
