@@ -8,15 +8,14 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
-      "~~/*": ["./*"]
+      "~~/*": ["./*"],
     },
     "types": [
-      "node",
-      "vuetify"
+      "vuetify",
     ],
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
   },
-  "include": ["src/**/*"]
+  "include": ["src"],
 }
