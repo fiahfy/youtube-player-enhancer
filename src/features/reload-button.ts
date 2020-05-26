@@ -55,7 +55,9 @@ browser.runtime.onMessage.addListener(async (message) => {
 })
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const data = await browser.runtime.sendMessage({ id: 'contentLoaded' })
+  const data = await browser.runtime.sendMessage({
+    id: 'contentLoaded',
+  })
   settings = data.settings
   setup()
 })

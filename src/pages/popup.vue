@@ -15,10 +15,24 @@
           dense
           class="px-4 mt-0"
         /> -->
+        <v-subheader>Info</v-subheader>
+        <v-switch
+          v-model="elapsedTime"
+          label="Always Show Elapsed Time"
+          dense
+          class="px-4 mt-0"
+        />
         <v-subheader>Chat</v-subheader>
         <v-switch
           v-model="reloadButtonEnabled"
           label="Add Button for Reloading Chat Frame"
+          dense
+          class="px-4 mt-0"
+        />
+        <v-subheader>Comments</v-subheader>
+        <v-switch
+          v-model="timestampAnchor"
+          label="Donot Scroll on Click Timestamp"
           dense
           class="px-4 mt-0"
         />
@@ -45,6 +59,22 @@ export default class Popup extends Vue {
   set seekButtonsEnabled(value) {
     settingsStore.setSeekButtonsEnabled({
       seekButtonsEnabled: value,
+    })
+  }
+  get elapsedTime() {
+    return settingsStore.elapsedTime
+  }
+  set elapsedTime(value) {
+    settingsStore.setElapsedTime({
+      elapsedTime: value,
+    })
+  }
+  get timestampAnchor() {
+    return settingsStore.timestampAnchor
+  }
+  set timestampAnchor(value) {
+    settingsStore.setTimestampAnchor({
+      timestampAnchor: value,
     })
   }
   get videoQualityFixed() {

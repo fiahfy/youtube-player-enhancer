@@ -103,7 +103,6 @@ browser.runtime.onMessage.addListener(async (message) => {
       break
     case 'tabStateChanged':
       enabled = data.tabState.forceScrollEnabled
-      console.log(data)
       updateButton()
       setupTimer()
       break

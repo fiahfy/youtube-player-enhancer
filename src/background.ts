@@ -15,15 +15,21 @@ const getSettings = async () => {
   return JSON.parse(JSON.stringify(store.state.settings))
 }
 
-const contentLoaded = async (tabId: number, frameId?: number) => {
+const loaded = async (tabId: number, frameId?: number) => {
+  await browser.pageAction.setIcon({ tabId, path: icon })
+  await browser.pageAction.show(tabId)
+  await browser.tabs.insertCSS(tabId, { frameId, file: inject })
+}
+
+const iframeLoaded = async (tabId: number, frameId?: number) => {
+  await browser.tabs.insertCSS(tabId, { frameId, file: inject })
+}
+
+const contentLoaded = async (tabId: number) => {
   const tabState = { ...initialState }
   tabStates = { ...tabStates, [tabId]: tabState }
 
   const settings = await getSettings()
-
-  await browser.pageAction.setIcon({ tabId, path: icon })
-  await browser.pageAction.show(tabId)
-  await browser.tabs.insertCSS(tabId, { frameId, file: inject })
 
   return { settings, tabState }
 }
@@ -71,8 +77,12 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
   const { id, data } = message
   const { tab, frameId } = sender
   switch (id) {
+    case 'loaded':
+      return tab?.id && (await loaded(tab.id, frameId))
+    case 'iframeLoaded':
+      return tab?.id && (await iframeLoaded(tab.id, frameId))
     case 'contentLoaded':
-      return tab?.id && (await contentLoaded(tab.id, frameId))
+      return tab?.id && (await contentLoaded(tab.id))
     case 'settingsChanged':
       await settingsChanged()
       break
