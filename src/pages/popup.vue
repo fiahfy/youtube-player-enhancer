@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-content class="fill-height">
+    <v-main class="fill-height">
       <v-container fluid pa-0>
         <v-subheader>Player</v-subheader>
         <v-switch
@@ -43,74 +43,90 @@
           dense
         /> -->
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { defineComponent, computed } from '@vue/composition-api'
 import { settingsStore } from '~/store'
 
-@Component
-export default class Popup extends Vue {
-  get seekButtonsEnabled() {
-    return settingsStore.seekButtonsEnabled
-  }
-  set seekButtonsEnabled(value) {
-    settingsStore.setSeekButtonsEnabled({
-      seekButtonsEnabled: value,
+export default defineComponent({
+  setup() {
+    const seekButtonsEnabled = computed({
+      get: () => {
+        return settingsStore.seekButtonsEnabled
+      },
+      set: (value) => {
+        settingsStore.setSeekButtonsEnabled({
+          seekButtonsEnabled: value,
+        })
+      },
     })
-  }
-  get elapsedTime() {
-    return settingsStore.elapsedTime
-  }
-  set elapsedTime(value) {
-    settingsStore.setElapsedTime({
-      elapsedTime: value,
+    const elapsedTime = computed({
+      get: () => {
+        return settingsStore.elapsedTime
+      },
+      set: (value) => {
+        settingsStore.setElapsedTime({
+          elapsedTime: value,
+        })
+      },
     })
-  }
-  get timestampAnchor() {
-    return settingsStore.timestampAnchor
-  }
-  set timestampAnchor(value) {
-    settingsStore.setTimestampAnchor({
-      timestampAnchor: value,
+    const timestampAnchor = computed({
+      get: () => {
+        return settingsStore.timestampAnchor
+      },
+      set: (value) => {
+        settingsStore.setTimestampAnchor({
+          timestampAnchor: value,
+        })
+      },
     })
-  }
-  get videoQualityFixed() {
-    return settingsStore.videoQualityFixed
-  }
-  set videoQualityFixed(value) {
-    settingsStore.setVideoQualityFixed({
-      videoQualityFixed: value,
+    const videoQualityFixed = computed({
+      get: () => {
+        return settingsStore.videoQualityFixed
+      },
+      set: (value) => {
+        settingsStore.setVideoQualityFixed({
+          videoQualityFixed: value,
+        })
+      },
     })
-  }
-  get reloadButtonEnabled() {
-    return settingsStore.reloadButtonEnabled
-  }
-  set reloadButtonEnabled(value) {
-    settingsStore.setReloadButtonEnabled({
-      reloadButtonEnabled: value,
+    const reloadButtonEnabled = computed({
+      get: () => {
+        return settingsStore.reloadButtonEnabled
+      },
+      set: (value) => {
+        settingsStore.setReloadButtonEnabled({
+          reloadButtonEnabled: value,
+        })
+      },
     })
-  }
-  get forceScrollButtonEnabled() {
-    return settingsStore.forceScrollButtonEnabled
-  }
-  set forceScrollButtonEnabled(value) {
-    settingsStore.setForceScrollButtonEnabled({
-      forceScrollButtonEnabled: value,
+    const forceScrollButtonEnabled = computed({
+      get: () => {
+        return settingsStore.forceScrollButtonEnabled
+      },
+      set: (value) => {
+        settingsStore.setForceScrollButtonEnabled({
+          forceScrollButtonEnabled: value,
+        })
+      },
     })
-  }
-}
+
+    return {
+      seekButtonsEnabled,
+      elapsedTime,
+      timestampAnchor,
+      videoQualityFixed,
+      reloadButtonEnabled,
+      forceScrollButtonEnabled,
+    }
+  },
+})
 </script>
 
 <style lang="scss">
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
 html {
   overflow-y: hidden;
 }
@@ -119,8 +135,5 @@ html {
 <style lang="scss" scoped>
 .v-application {
   min-width: 480px;
-  .v-content ::v-deep .v-content__wrap {
-    overflow-y: auto;
-  }
 }
 </style>
