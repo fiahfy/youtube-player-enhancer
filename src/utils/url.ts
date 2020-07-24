@@ -1,1 +1,2 @@
-export const isVideoUrl = () => new URL(location.href).pathname === '/watch'
+export const isVideoUrl = (): boolean =>
+  new URL(location.href).pathname === '/watch'
