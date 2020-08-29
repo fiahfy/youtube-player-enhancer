@@ -79,7 +79,9 @@ const fixQuality = async (): Promise<boolean> => {
 
 const fixQualityLoop = async (): Promise<void> => {
   return new Promise((resolve) => {
-    const video = document.querySelector('video.html5-main-video')
+    const video = document.querySelector(
+      'ytd-watch-flexy video.html5-main-video'
+    )
     if (video) {
       video.removeEventListener('loadedmetadata', fixQualityLoop)
     }
@@ -118,7 +120,7 @@ const setup = async (): Promise<void> => {
   await fixQualityLoop()
 
   const video = document.querySelector(
-    'video.html5-main-video'
+    'ytd-watch-flexy video.html5-main-video'
   ) as HTMLVideoElement | null
   if (!video || video.readyState > 0) {
     return
