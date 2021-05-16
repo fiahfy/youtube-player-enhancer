@@ -22,13 +22,13 @@
           dense
           class="px-4 mt-0"
         />
-        <v-subheader>Chat</v-subheader>
+        <!-- <v-subheader>Chat</v-subheader>
         <v-switch
           v-model="reloadButtonEnabled"
           label="Add Button for Reloading Chat Frame"
           dense
           class="px-4 mt-0"
-        />
+        /> -->
         <v-subheader>Comments</v-subheader>
         <v-switch
           v-model="timestampAnchor"

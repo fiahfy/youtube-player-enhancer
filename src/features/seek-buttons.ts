@@ -64,21 +64,21 @@ const createButton = (config: ButtonConfig): HTMLButtonElement => {
 }
 
 const setupControls = (): void => {
-  const controls = document.querySelector(
-    '.ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls'
+  const volumeArea = document.querySelector(
+    '.ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls .ytp-volume-area'
   )
-  if (!controls) {
+  if (!volumeArea || !volumeArea.parentElement) {
     return
   }
 
   for (const config of buttonConfigs) {
-    if (controls.querySelector(`.${config.className}`)) {
+    if (volumeArea.parentElement.querySelector(`.${config.className}`)) {
       continue
     }
 
     const button = createButton(config)
     button.classList.add(config.className)
-    controls.append(button)
+    volumeArea.parentElement.insertBefore(button, volumeArea)
   }
 
   const bar = document.querySelector(

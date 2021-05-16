@@ -6,12 +6,16 @@ body.ype-elapsed-time
   > #info-text {
   max-height: initial;
 }
-body.ype-video-quality-fixing .html5-video-player > .ytp-settings-menu {
+/* body.ype-video-quality-fixing .html5-video-player > .ytp-settings-menu {
   display: none !important;
+} */
+.ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls .ype-backward-button,
+.ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls .ype-forward-button {
+  flex-shrink: 0;
 }
 
 /* iframe */
-yt-live-chat-header-renderer > #primary-content {
+/* yt-live-chat-header-renderer > #primary-content {
   min-width: 0;
 }
 yt-live-chat-header-renderer
@@ -31,4 +35,4 @@ yt-live-chat-header-renderer > .ype-menu-button > button > yt-icon > svg {
   display: block;
   width: 100%;
   height: 100%;
-}
+} */
