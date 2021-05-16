@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
@@ -34,7 +32,16 @@ module.exports = {
       },
       {
         test: /\.s(c|a)ss$/,
-        use: ['vue-style-loader', 'css-loader', 'sass-loader'],
+        use: [
+          'vue-style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              esModule: false,
+            },
+          },
+          'sass-loader',
+        ],
       },
       {
         test: /\.(css|jpg|gif|png|woff|woff2|eot|ttf)$/,

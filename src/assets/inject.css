@@ -1,20 +1,30 @@
 /* top */
-body.ype-elapsed-time ytd-video-primary-info-renderer > #container > #info > #info-text {
+body.ype-elapsed-time
+  ytd-video-primary-info-renderer
+  > #container
+  > #info
+  > #info-text {
   max-height: initial;
 }
 body.ype-video-quality-fixing .html5-video-player > .ytp-settings-menu {
-  display: none!important;
+  display: none !important;
 }
 
 /* iframe */
 yt-live-chat-header-renderer > #primary-content {
   min-width: 0;
 }
-yt-live-chat-header-renderer > #primary-content > #view-selector > yt-sort-filter-sub-menu-renderer {
+yt-live-chat-header-renderer
+  > #primary-content
+  > #view-selector
+  > yt-sort-filter-sub-menu-renderer {
   width: 100%;
 }
-yt-live-chat-header-renderer > .ype-menu-button.ype-active-menu-button > button > yt-icon {
-  color: #4387f1!important;
+yt-live-chat-header-renderer
+  > .ype-menu-button.ype-active-menu-button
+  > button
+  > yt-icon {
+  color: #4387f1 !important;
 }
 yt-live-chat-header-renderer > .ype-menu-button > button > yt-icon > svg {
   pointer-events: none;

@@ -9,5 +9,5 @@ if (self === top) {
 } else {
   browser.runtime.sendMessage({ id: 'iframeLoaded' })
   // require('~/features/force-scroll-button')
-  require('~/features/reload-button')
+  // require('~/features/reload-button')
 }
