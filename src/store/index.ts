@@ -31,7 +31,8 @@ const vuexPersist = new VuexPersistence({
 })
 
 const createStore = () =>
-  new Vuex.Store({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  new Vuex.Store<any>({
     state: {},
     modules: {
       settings,
