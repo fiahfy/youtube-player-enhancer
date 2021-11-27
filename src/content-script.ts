@@ -1,4 +1,4 @@
-import { browser } from 'webextension-polyfill-ts'
+import browser from 'webextension-polyfill'
 
 if (self === top) {
   browser.runtime.sendMessage({ id: 'loaded' })

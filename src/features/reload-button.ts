@@ -1,4 +1,4 @@
-import { browser } from 'webextension-polyfill-ts'
+import browser from 'webextension-polyfill'
 import Settings from '~/models/settings'
 import refresh from '~/assets/refresh.svg'
 

@@ -1,4 +1,4 @@
-import { browser } from 'webextension-polyfill-ts'
+import browser from 'webextension-polyfill'
 import { readyStore } from '~/store'
 import icon from '~/assets/icon.png'
 
@@ -14,11 +14,13 @@ const getSettings = async () => {
   return JSON.parse(JSON.stringify(store.state.settings))
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const loaded = async (tabId: number, frameId?: number) => {
   await browser.pageAction.setIcon({ tabId, path: icon })
   await browser.pageAction.show(tabId)
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const iframeLoaded = async (tabId: number, frameId?: number) => {
   //
 }
