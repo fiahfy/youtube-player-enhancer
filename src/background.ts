@@ -1,4 +1,3 @@
-import browser from 'webextension-polyfill'
 import { readyStore } from '~/store'
 import icon from '~/assets/icon.png'
 
@@ -15,9 +14,8 @@ const getSettings = async () => {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const loaded = async (tabId: number, frameId?: number) => {
-  await browser.pageAction.setIcon({ tabId, path: icon })
-  await browser.pageAction.show(tabId)
+const loaded = async (tabId: number) => {
+  await chrome.action.setIcon({ tabId, path: icon })
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -46,50 +44,64 @@ const tabStateChanged = async (tabId: number, name: string, value: boolean) => {
     [tabId]: tabState,
   }
 
-  await browser.tabs.sendMessage(tabId, {
-    id: 'tabStateChanged',
+  await chrome.tabs.sendMessage(tabId, {
+    type: 'tab-state-changed',
     data: { tabState },
   })
 }
 
 const settingsChanged = async () => {
   const settings = await getSettings()
-  const tabs = await browser.tabs.query({})
+  const tabs = await chrome.tabs.query({})
   for (const tab of tabs) {
     try {
       tab.id &&
-        (await browser.tabs.sendMessage(tab.id, {
-          id: 'settingsChanged',
+        chrome.tabs.sendMessage(tab.id, {
+          type: 'settings-changed',
           data: { settings },
-        }))
+        })
     } catch (e) {} // eslint-disable-line no-empty
   }
 }
 
-browser.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
   if (changeInfo.url) {
-    const settings = await getSettings()
-    browser.tabs.sendMessage(tabId, { id: 'urlChanged', data: { settings } })
+    await chrome.tabs.sendMessage(tabId, { type: 'url-changed' })
   }
 })
 
-browser.runtime.onMessage.addListener(async (message, sender) => {
-  const { id, data } = message
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  const { type, data } = message
   const { tab, frameId } = sender
-  switch (id) {
+  switch (type) {
     case 'loaded':
-      return tab?.id && (await loaded(tab.id, frameId))
-    case 'iframeLoaded':
-      return tab?.id && (await iframeLoaded(tab.id, frameId))
-    case 'contentLoaded':
-      return tab?.id && (await contentLoaded(tab.id))
-    case 'settingsChanged':
-      await settingsChanged()
-      break
-    case 'tabStateChanged': {
+      if (tab?.id) {
+        loaded(tab.id).then(() => sendResponse())
+        return true
+      }
+      return
+    case 'iframe-loaded':
+      if (tab?.id) {
+        iframeLoaded(tab.id, frameId).then(() => sendResponse())
+        return true
+      }
+      return
+    case 'content-loaded':
+      if (tab?.id) {
+        contentLoaded(tab.id).then((data) => sendResponse(data))
+        return true
+      }
+      return
+    case 'settings-changed':
+      settingsChanged().then(() => sendResponse())
+      return true
+    case 'tab-state-changed': {
       const { name, value } = data
-      tab?.id && (await tabStateChanged(tab.id, name, value))
-      break
+      if (tab?.id) {
+        tabStateChanged(tab.id, name, value).then(() => sendResponse())
+        return true
+      }
+      return
     }
   }
 })

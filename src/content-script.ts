@@ -1,13 +1,10 @@
-import browser from 'webextension-polyfill'
-
 if (self === top) {
-  browser.runtime.sendMessage({ id: 'loaded' })
+  chrome.runtime.sendMessage({ type: 'loaded' })
   require('~/features/seek-buttons')
   require('~/features/elapsed-time')
   require('~/features/timestamp-anchor')
-  // require('~/features/video-quality-fixer')
 } else {
-  browser.runtime.sendMessage({ id: 'iframeLoaded' })
+  chrome.runtime.sendMessage({ type: 'iframe-loaded' })
   // require('~/features/force-scroll-button')
   // require('~/features/reload-button')
 }

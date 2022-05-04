@@ -5,6 +5,7 @@ body.ype-elapsed-time
   > #info
   > #info-text {
   max-height: initial;
+  -webkit-line-clamp: 2;
 }
 /* body.ype-video-quality-fixing .html5-video-player > .ytp-settings-menu {
   display: none !important;

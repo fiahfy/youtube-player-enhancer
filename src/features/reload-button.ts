@@ -1,4 +1,3 @@
-import browser from 'webextension-polyfill'
 import Settings from '~/models/settings'
 import refresh from '~/assets/refresh.svg'
 
@@ -33,7 +32,7 @@ const addButton = () => {
   icon.innerHTML = refresh
 }
 
-const removeButton = (): void => {
+const removeButton = () => {
   const refIconButton = document.querySelector(
     '#chat-messages > yt-live-chat-header-renderer > yt-icon-button'
   )
@@ -41,23 +40,22 @@ const removeButton = (): void => {
   button && button.remove()
 }
 
-const setup = () => {
+const init = () => {
   settings.reloadButtonEnabled ? addButton() : removeButton()
 }
 
-browser.runtime.onMessage.addListener(async (message) => {
-  const { id, data } = message
-  switch (id) {
-    case 'settingsChanged':
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  const { type, data } = message
+  switch (type) {
+    case 'settings-changed':
       settings = data.settings
-      return setup()
+      init()
+      return sendResponse()
   }
 })
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const data = await browser.runtime.sendMessage({
-    id: 'contentLoaded',
-  })
+  const data = await chrome.runtime.sendMessage({ type: 'content-loaded' })
   settings = data.settings
-  setup()
+  init()
 })

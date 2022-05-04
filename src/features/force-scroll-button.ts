@@ -1,4 +1,3 @@
-import browser from 'webextension-polyfill'
 import Settings from '~/models/settings'
 import downArrow from '~/assets/down-arrow.svg'
 
@@ -8,7 +7,7 @@ let settings: Settings
 let enabled: boolean
 let timer: number
 
-const updateButton = (): void => {
+const updateButton = () => {
   const refIconButton = document.querySelector(
     '#chat-messages > yt-live-chat-header-renderer > yt-icon-button'
   )
@@ -41,9 +40,9 @@ const addButton = () => {
     'ype-menu-button'
   )
   iconButton.title = 'Enable Force Scroll'
-  iconButton.onclick = () => {
-    browser.runtime.sendMessage({
-      id: 'tabStateChanged',
+  iconButton.onclick = async () => {
+    await chrome.runtime.sendMessage({
+      type: 'tab-state-changed',
       data: { name: 'forceScrollEnabled', value: !enabled },
     })
   }
@@ -58,7 +57,7 @@ const addButton = () => {
   updateButton()
 }
 
-const removeButton = (): void => {
+const removeButton = () => {
   const refIconButton = document.querySelector(
     '#chat-messages > yt-live-chat-header-renderer > yt-icon-button'
   )
@@ -85,7 +84,7 @@ const setupTimer = () => {
   }
 }
 
-const setup = () => {
+const init = () => {
   if (settings.forceScrollButtonEnabled) {
     addButton()
     setupTimer()
@@ -94,24 +93,24 @@ const setup = () => {
   }
 }
 
-browser.runtime.onMessage.addListener(async (message) => {
-  const { id, data } = message
-  switch (id) {
-    case 'settingsChanged':
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  const { type, data } = message
+  switch (type) {
+    case 'settings-changed':
       settings = data.settings
-      setup()
-      break
-    case 'tabStateChanged':
+      init()
+      return sendResponse()
+    case 'tab-state-changed':
       enabled = data.tabState.forceScrollEnabled
       updateButton()
       setupTimer()
-      break
+      return sendResponse()
   }
 })
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const data = await browser.runtime.sendMessage({ id: 'contentLoaded' })
+  const data = await chrome.runtime.sendMessage({ type: 'content-loaded' })
   settings = data.settings
   enabled = data.tabState.forceScrollEnabled
-  setup()
+  init()
 })

@@ -14,23 +14,19 @@ export default class SettingsModule extends VuexModule {
     seekButtonsEnabled,
   }: {
     seekButtonsEnabled: boolean
-  }): void {
+  }) {
     this.seekButtonsEnabled = seekButtonsEnabled
   }
   @Mutation
-  setElapsedTime({ elapsedTime }: { elapsedTime: boolean }): void {
+  setElapsedTime({ elapsedTime }: { elapsedTime: boolean }) {
     this.elapsedTime = elapsedTime
   }
   @Mutation
-  setTimestampAnchor({ timestampAnchor }: { timestampAnchor: boolean }): void {
+  setTimestampAnchor({ timestampAnchor }: { timestampAnchor: boolean }) {
     this.timestampAnchor = timestampAnchor
   }
   @Mutation
-  setVideoQualityFixed({
-    videoQualityFixed,
-  }: {
-    videoQualityFixed: boolean
-  }): void {
+  setVideoQualityFixed({ videoQualityFixed }: { videoQualityFixed: boolean }) {
     this.videoQualityFixed = videoQualityFixed
   }
   @Mutation
@@ -38,7 +34,7 @@ export default class SettingsModule extends VuexModule {
     reloadButtonEnabled,
   }: {
     reloadButtonEnabled: boolean
-  }): void {
+  }) {
     this.reloadButtonEnabled = reloadButtonEnabled
   }
   @Mutation
@@ -46,7 +42,7 @@ export default class SettingsModule extends VuexModule {
     forceScrollButtonEnabled,
   }: {
     forceScrollButtonEnabled: boolean
-  }): void {
+  }) {
     this.forceScrollButtonEnabled = forceScrollButtonEnabled
   }
 }

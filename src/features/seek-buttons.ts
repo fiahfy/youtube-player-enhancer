@@ -1,4 +1,3 @@
-import browser from 'webextension-polyfill'
 import Settings from '~/models/settings'
 import { isVideoUrl } from '~/utils/url'
 import forward from '~/assets/forward.svg'
@@ -38,12 +37,12 @@ const timeout = 3000
 let settings: Settings
 let timer = -1
 
-const createButton = (config: ButtonConfig): HTMLButtonElement => {
+const createButton = (config: ButtonConfig) => {
   const button = document.createElement('button')
   button.classList.add('ytp-button')
   button.title = config.title
   button.disabled = true
-  button.onclick = (): void => {
+  button.onclick = () => {
     const e = new KeyboardEvent('keydown', {
       bubbles: true,
       key: config.key,
@@ -63,7 +62,7 @@ const createButton = (config: ButtonConfig): HTMLButtonElement => {
   return button
 }
 
-const setupControls = (): void => {
+const setupControls = () => {
   const volumeArea = document.querySelector(
     '.ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls .ytp-volume-area'
   )
@@ -98,7 +97,7 @@ const setupControls = (): void => {
   }
 }
 
-const removeControls = (): void => {
+const removeControls = () => {
   const controls = document.querySelector(
     '.ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls'
   )
@@ -112,8 +111,8 @@ const removeControls = (): void => {
   }
 }
 
-const setupControlsLoop = async (): Promise<void> => {
-  return new Promise((resolve) => {
+const setupControlsLoop = async () => {
+  return new Promise<void>((resolve) => {
     const video = document.querySelector(
       'ytd-watch-flexy video.html5-main-video'
     )
@@ -156,29 +155,28 @@ const enableControls = async () => {
   video.addEventListener('loadedmetadata', setupControlsLoop)
 }
 
-const setup = async () => {
+const init = async () => {
   if (!isVideoUrl()) {
     return
   }
   settings.seekButtonsEnabled ? await enableControls() : disableControls()
 }
 
-browser.runtime.onMessage.addListener(async (message) => {
-  const { id, data } = message
-  switch (id) {
-    case 'urlChanged':
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  const { type, data } = message
+  switch (type) {
+    case 'url-changed':
+      init().then(() => sendResponse())
+      return true
+    case 'settings-changed':
       settings = data.settings
-      return await setup()
-    case 'settingsChanged':
-      settings = data.settings
-      return await setup()
+      init().then(() => sendResponse())
+      return true
   }
 })
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const data = await browser.runtime.sendMessage({
-    id: 'contentLoaded',
-  })
+  const data = await chrome.runtime.sendMessage({ type: 'content-loaded' })
   settings = data.settings
-  await setup()
+  await init()
 })
