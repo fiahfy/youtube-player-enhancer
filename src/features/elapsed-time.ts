@@ -1,4 +1,4 @@
-import Settings from '~/models/settings'
+import { Settings } from '~/models'
 import { isVideoUrl } from '~/utils/url'
 
 const className = 'ype-elapsed-time'

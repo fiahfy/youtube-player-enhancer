@@ -1,4 +1,4 @@
-import Settings from '~/models/settings'
+import { Settings } from '~/models'
 import { isVideoUrl } from '~/utils/url'
 import forward from '~/assets/forward.svg'
 import replay from '~/assets/replay.svg'
@@ -48,7 +48,7 @@ const createButton = (config: ButtonConfig) => {
       key: config.key,
       code: config.code,
       keyCode: config.keyCode,
-    } as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+    })
     document.documentElement.dispatchEvent(e)
   }
   button.innerHTML = config.svg
@@ -90,9 +90,9 @@ const setupControls = () => {
   const disabled = bar.getAttribute('aria-disabled') === 'true'
 
   for (const config of buttonConfigs) {
-    const button = document.querySelector(
+    const button = document.querySelector<HTMLButtonElement>(
       `.${config.className}`
-    ) as HTMLButtonElement | null
+    )
     button && (button.disabled = disabled)
   }
 }
@@ -146,9 +146,9 @@ const disableControls = () => {
 const enableControls = async () => {
   await setupControlsLoop()
 
-  const video = document.querySelector(
+  const video = document.querySelector<HTMLVideoElement>(
     'ytd-watch-flexy video.html5-main-video'
-  ) as HTMLVideoElement | null
+  )
   if (!video || video.readyState > 0) {
     return
   }

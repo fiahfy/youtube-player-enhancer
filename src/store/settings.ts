@@ -1,48 +1,35 @@
-import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
+import { Module } from 'vuex'
+import { Settings } from '~/models'
+import { State as RootState } from '~/store'
 
-@Module({ name: 'settings' })
-export default class SettingsModule extends VuexModule {
-  seekButtonsEnabled = false
-  elapsedTime = false
-  timestampAnchor = false
-  videoQualityFixed = false
-  reloadButtonEnabled = false
-  forceScrollButtonEnabled = false
+export type State = Settings
 
-  @Mutation
-  setSeekButtonsEnabled({
-    seekButtonsEnabled,
-  }: {
-    seekButtonsEnabled: boolean
-  }) {
-    this.seekButtonsEnabled = seekButtonsEnabled
-  }
-  @Mutation
-  setElapsedTime({ elapsedTime }: { elapsedTime: boolean }) {
-    this.elapsedTime = elapsedTime
-  }
-  @Mutation
-  setTimestampAnchor({ timestampAnchor }: { timestampAnchor: boolean }) {
-    this.timestampAnchor = timestampAnchor
-  }
-  @Mutation
-  setVideoQualityFixed({ videoQualityFixed }: { videoQualityFixed: boolean }) {
-    this.videoQualityFixed = videoQualityFixed
-  }
-  @Mutation
-  setReloadButtonEnabled({
-    reloadButtonEnabled,
-  }: {
-    reloadButtonEnabled: boolean
-  }) {
-    this.reloadButtonEnabled = reloadButtonEnabled
-  }
-  @Mutation
-  setForceScrollButtonEnabled({
-    forceScrollButtonEnabled,
-  }: {
-    forceScrollButtonEnabled: boolean
-  }) {
-    this.forceScrollButtonEnabled = forceScrollButtonEnabled
-  }
+export const module: Module<State, RootState> = {
+  namespaced: true,
+  state: () => ({
+    elapsedTime: false,
+    seekButtonsEnabled: false,
+    timestampAnchor: false,
+  }),
+  mutations: {
+    setElapsedTime(state, { elapsedTime }: { elapsedTime: boolean }) {
+      state.elapsedTime = elapsedTime
+    },
+    setSeekButtonsEnabled(
+      state,
+      {
+        seekButtonsEnabled,
+      }: {
+        seekButtonsEnabled: boolean
+      }
+    ) {
+      state.seekButtonsEnabled = seekButtonsEnabled
+    },
+    setTimestampAnchor(
+      state,
+      { timestampAnchor }: { timestampAnchor: boolean }
+    ) {
+      state.timestampAnchor = timestampAnchor
+    },
+  },
 }

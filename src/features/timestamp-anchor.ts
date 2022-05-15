@@ -1,4 +1,4 @@
-import Settings from '~/models/settings'
+import { Settings } from '~/models'
 import { isVideoUrl } from '~/utils/url'
 
 let settings: Settings
@@ -23,12 +23,12 @@ const handleClick = (e: MouseEvent, target?: HTMLElement) => {
 }
 
 const addEventListeners = () => {
-  const el = document.querySelector('ytd-comments') as HTMLElement
+  const el = document.querySelector<HTMLElement>('ytd-comments')
   el?.addEventListener('click', handleClick)
 }
 
 const removeEventListeners = () => {
-  const el = document.querySelector('ytd-comments') as HTMLElement
+  const el = document.querySelector<HTMLElement>('ytd-comments')
   el?.removeEventListener('click', handleClick)
 }
 

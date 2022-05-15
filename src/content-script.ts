@@ -5,6 +5,4 @@ if (self === top) {
   require('~/features/timestamp-anchor')
 } else {
   chrome.runtime.sendMessage({ type: 'iframe-loaded' })
-  // require('~/features/force-scroll-button')
-  // require('~/features/reload-button')
 }

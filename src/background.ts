@@ -1,3 +1,4 @@
+import { Settings } from '~/models'
 import { readyStore } from '~/store'
 import icon from '~/assets/icon.png'
 
@@ -50,9 +51,10 @@ const tabStateChanged = async (tabId: number, name: string, value: boolean) => {
   })
 }
 
-const settingsChanged = async () => {
-  const settings = await getSettings()
-  const tabs = await chrome.tabs.query({})
+const settingsChanged = async (settings: Settings) => {
+  const tabs = await chrome.tabs.query({
+    url: 'https://www.youtube.com/*',
+  })
   for (const tab of tabs) {
     try {
       tab.id &&
@@ -93,7 +95,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       }
       return
     case 'settings-changed':
-      settingsChanged().then(() => sendResponse())
+      settingsChanged(data.settings).then(() => sendResponse())
       return true
     case 'tab-state-changed': {
       const { name, value } = data
