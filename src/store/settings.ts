@@ -1,35 +1,49 @@
-import { Module } from 'vuex'
+import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit'
 import { Settings } from '~/models'
-import { State as RootState } from '~/store'
+import { AppState } from '~/store'
 
-export type State = Settings
+type State = Settings
 
-export const module: Module<State, RootState> = {
-  namespaced: true,
-  state: () => ({
-    elapsedTime: false,
-    seekButtonsEnabled: false,
-    timestampAnchor: false,
-  }),
-  mutations: {
-    setElapsedTime(state, { elapsedTime }: { elapsedTime: boolean }) {
-      state.elapsedTime = elapsedTime
+export const initialState: State = {
+  elapsedTime: false,
+  seekButtonsEnabled: false,
+  timestampAnchor: false,
+}
+
+export const settingsSlice = createSlice({
+  name: 'settings',
+  initialState,
+  reducers: {
+    setElapsedTime(state, action: PayloadAction<boolean>) {
+      return { ...state, elapsedTime: action.payload }
     },
-    setSeekButtonsEnabled(
-      state,
-      {
-        seekButtonsEnabled,
-      }: {
-        seekButtonsEnabled: boolean
-      }
-    ) {
-      state.seekButtonsEnabled = seekButtonsEnabled
+    setSeekButtonsEnabled(state, action: PayloadAction<boolean>) {
+      return { ...state, seekButtonsEnabled: action.payload }
     },
-    setTimestampAnchor(
-      state,
-      { timestampAnchor }: { timestampAnchor: boolean }
-    ) {
-      state.timestampAnchor = timestampAnchor
+    setTimestampAnchor(state, action: PayloadAction<boolean>) {
+      return { ...state, timestampAnchor: action.payload }
     },
   },
-}
+})
+
+export const { setElapsedTime, setSeekButtonsEnabled, setTimestampAnchor } =
+  settingsSlice.actions
+
+export default settingsSlice.reducer
+
+export const selectSettings = (state: AppState) => state.settings
+
+export const selectElapsedTime = createSelector(
+  selectSettings,
+  (settings) => settings.elapsedTime
+)
+
+export const selectSeekButtonsEnabled = createSelector(
+  selectSettings,
+  (settings) => settings.seekButtonsEnabled
+)
+
+export const selectTimestampAnchor = createSelector(
+  selectSettings,
+  (settings) => settings.timestampAnchor
+)
