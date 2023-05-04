@@ -1,7 +1,6 @@
 import { Settings } from '~/models'
 import { persistConfig } from '~/store'
 import { initialState as initialSettings } from '~/store/settings'
-import icon from '~/assets/icon.png'
 
 type TabState = {
   [name: string]: boolean
@@ -23,7 +22,7 @@ const getSettings = async () => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const loaded = async (tabId: number) => {
-  await chrome.action.setIcon({ tabId, path: icon })
+  //
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

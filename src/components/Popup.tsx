@@ -18,7 +18,7 @@ import {
   setTimestampAnchor,
 } from '~/store/settings'
 
-const InnerApp = () => {
+const App = () => {
   const elapsedTime = useAppSelector(selectElapsedTime)
   const seekButtonsEnabled = useAppSelector(selectSeekButtonsEnabled)
   const timestampAnchor = useAppSelector(selectTimestampAnchor)
@@ -72,7 +72,7 @@ const InnerApp = () => {
   )
 }
 
-const App = () => {
+const Popup = () => {
   return (
     <StoreProvider>
       <CssBaseline />
@@ -81,9 +81,9 @@ const App = () => {
           html: { overflowY: 'hidden', width: 460 },
         }}
       />
-      <InnerApp />
+      <App />
     </StoreProvider>
   )
 }
 
-export default App
+export default Popup

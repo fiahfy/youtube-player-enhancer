@@ -13,6 +13,7 @@ body.ype-elapsed-time
 .ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls .ype-backward-button,
 .ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls .ype-forward-button {
   flex-shrink: 0;
+  padding: 0;
 }
 
 /* iframe */

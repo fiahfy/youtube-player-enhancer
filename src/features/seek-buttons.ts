@@ -1,7 +1,7 @@
 import { Settings } from '~/models'
 import { isVideoUrl } from '~/utils/url'
-import forward from '~/assets/forward.svg'
-import replay from '~/assets/replay.svg'
+import forward from '~/assets/forward.svg?raw'
+import replay from '~/assets/replay.svg?raw'
 
 type ButtonConfig = {
   title: string
@@ -57,6 +57,8 @@ const createButton = (config: ButtonConfig) => {
   if (svg) {
     svg.setAttribute('viewBox', '-8 -8 40 40')
     svg.style.fill = 'white'
+    svg.style.width = '48'
+    svg.style.height = '48'
   }
 
   return button
@@ -175,8 +177,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   }
 })
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const data = await chrome.runtime.sendMessage({ type: 'content-loaded' })
+chrome.runtime.sendMessage({ type: 'content-loaded' }).then(async (data) => {
   settings = data.settings
   await init()
 })
