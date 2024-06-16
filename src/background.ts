@@ -21,12 +21,12 @@ const getSettings = async () => {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const loaded = async (tabId: number) => {
+const loaded = async (_tabId: number) => {
   //
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const iframeLoaded = async (tabId: number, frameId?: number) => {
+const iframeLoaded = async (_tabId: number, _frameId?: number) => {
   //
 }
 
