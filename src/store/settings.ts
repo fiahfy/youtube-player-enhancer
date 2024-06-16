@@ -35,15 +35,15 @@ export const selectSettings = (state: AppState) => state.settings
 
 export const selectElapsedTime = createSelector(
   selectSettings,
-  (settings) => settings.elapsedTime
+  (settings) => settings.elapsedTime,
 )
 
 export const selectSeekButtonsEnabled = createSelector(
   selectSettings,
-  (settings) => settings.seekButtonsEnabled
+  (settings) => settings.seekButtonsEnabled,
 )
 
 export const selectTimestampAnchor = createSelector(
   selectSettings,
-  (settings) => settings.timestampAnchor
+  (settings) => settings.timestampAnchor,
 )

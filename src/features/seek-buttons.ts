@@ -66,7 +66,7 @@ const createButton = (config: ButtonConfig) => {
 
 const setupControls = () => {
   const volumeArea = document.querySelector(
-    '.ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls .ytp-volume-area'
+    '.ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls .ytp-volume-area',
   )
   if (!volumeArea || !volumeArea.parentElement) {
     return
@@ -83,7 +83,7 @@ const setupControls = () => {
   }
 
   const bar = document.querySelector(
-    '.ytp-chrome-bottom .ytp-progress-bar-container'
+    '.ytp-chrome-bottom .ytp-progress-bar-container',
   )
   if (!bar) {
     return
@@ -93,7 +93,7 @@ const setupControls = () => {
 
   for (const config of buttonConfigs) {
     const button = document.querySelector<HTMLButtonElement>(
-      `.${config.className}`
+      `.${config.className}`,
     )
     button && (button.disabled = disabled)
   }
@@ -101,7 +101,7 @@ const setupControls = () => {
 
 const removeControls = () => {
   const controls = document.querySelector(
-    '.ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls'
+    '.ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls',
   )
   if (!controls) {
     return
@@ -116,7 +116,7 @@ const removeControls = () => {
 const setupControlsLoop = async () => {
   return new Promise<void>((resolve) => {
     const video = document.querySelector(
-      'ytd-watch-flexy video.html5-main-video'
+      'ytd-watch-flexy video.html5-main-video',
     )
     if (video) {
       video.removeEventListener('loadedmetadata', setupControlsLoop)
@@ -149,7 +149,7 @@ const enableControls = async () => {
   await setupControlsLoop()
 
   const video = document.querySelector<HTMLVideoElement>(
-    'ytd-watch-flexy video.html5-main-video'
+    'ytd-watch-flexy video.html5-main-video',
   )
   if (!video || video.readyState > 0) {
     return
