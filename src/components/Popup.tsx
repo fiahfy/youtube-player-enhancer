@@ -6,7 +6,7 @@ import {
   Switch,
   Typography,
 } from '@mui/material'
-import { ChangeEvent } from 'react'
+import type { ChangeEvent } from 'react'
 import { StoreProvider } from '~/contexts/StoreContext'
 import { useAppDispatch, useAppSelector } from '~/store'
 import {

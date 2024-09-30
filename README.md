@@ -1,6 +1,6 @@
 # Player Enhancer for YouTube
 
-![badge](https://github.com/fiahfy/youtube-player-enhancer/workflows/Create%20Release/badge.svg)
+[![Create Release](https://github.com/fiahfy/youtube-player-enhancer/actions/workflows/create-release.yml/badge.svg)](https://github.com/fiahfy/youtube-player-enhancer/actions/workflows/create-release.yml)
 
 > Chrome Extension for Player Enhancer on YouTube.
 

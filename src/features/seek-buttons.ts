@@ -1,7 +1,7 @@
-import { Settings } from '~/models'
-import { isVideoUrl } from '~/utils/url'
 import forward from '~/assets/forward.svg?raw'
 import replay from '~/assets/replay.svg?raw'
+import type { Settings } from '~/models'
+import { isVideoUrl } from '~/utils/url'
 
 type ButtonConfig = {
   title: string
@@ -95,7 +95,9 @@ const setupControls = () => {
     const button = document.querySelector<HTMLButtonElement>(
       `.${config.className}`,
     )
-    button && (button.disabled = disabled)
+    if (button) {
+      button.disabled = disabled
+    }
   }
 }
 
@@ -109,7 +111,7 @@ const removeControls = () => {
 
   for (const config of buttonConfigs) {
     const button = controls.querySelector(`.${config.className}`)
-    button && button.remove()
+    button?.remove()
   }
 }
 

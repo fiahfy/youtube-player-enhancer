@@ -1,4 +1,4 @@
-import { Settings } from '~/models'
+import type { Settings } from '~/models'
 import { isVideoUrl } from '~/utils/url'
 
 let settings: Settings
