@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@mui/material'
 import type { ChangeEvent } from 'react'
-import { StoreProvider } from '~/contexts/StoreContext'
+import StoreProvider from '~/providers/StoreProvider'
 import { useAppDispatch, useAppSelector } from '~/store'
 import {
   selectElapsedTime,
