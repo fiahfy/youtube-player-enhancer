@@ -1,6 +1,7 @@
 import { crx, defineManifest } from '@crxjs/vite-plugin'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import zip from 'vite-plugin-zip-pack'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import packageJson from './package.json'
 
@@ -25,7 +26,9 @@ const manifest = defineManifest({
     },
   ],
   action: {
-    default_icon: 'icon.png',
+    default_icon: {
+      128: 'icon.png',
+    },
     default_popup: 'src/popup.html',
   },
   permissions: ['storage'],
@@ -33,6 +36,10 @@ const manifest = defineManifest({
 })
 
 export default defineConfig({
-  plugins: [react(), crx({ manifest }), tsconfigPaths()],
-  server: { port: 9012, hmr: { port: 9012 } },
+  plugins: [react(), crx({ manifest }), zip(), tsconfigPaths()],
+  server: {
+    cors: {
+      origin: [/chrome-extension:\/\//],
+    },
+  },
 })

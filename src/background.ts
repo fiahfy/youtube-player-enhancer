@@ -15,7 +15,7 @@ const getSettings = async () => {
     const json = (await chrome.storage.local.get(key))[key]
     const rootState = JSON.parse(json)
     return JSON.parse(rootState.settings)
-  } catch (e) {
+  } catch {
     return initialSettings
   }
 }
@@ -68,7 +68,9 @@ const settingsChanged = async (settings: Settings) => {
           type: 'settings-changed',
           data: { settings },
         })
-    } catch (e) {} // eslint-disable-line no-empty
+    } catch {
+      // noop
+    }
   }
 }
 

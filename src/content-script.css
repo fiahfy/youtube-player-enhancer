@@ -1,10 +1,10 @@
 /* top */
-body.ype-elapsed-time
-  ytd-video-primary-info-renderer
+body.ype-elapsed-time ytd-video-primary-info-renderer
   > #container
   > #info
   > #info-text {
   max-height: initial;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
 }
 /* body.ype-video-quality-fixing .html5-video-player > .ytp-settings-menu {

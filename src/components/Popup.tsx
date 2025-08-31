@@ -49,7 +49,7 @@ const App = () => {
             onChange={handleChangeSeekButtonsEnabled}
           />
         }
-        label="Add Buttons for Seeking Forward and Backward"
+        label="Add 5-second skip controls"
       />
       <Typography variant="subtitle2">Info</Typography>
       <FormControlLabel
