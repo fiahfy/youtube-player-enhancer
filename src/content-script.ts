@@ -7,4 +7,5 @@ if (self === top) {
   import('~/features/timestamp-anchor')
 } else {
   chrome.runtime.sendMessage({ type: 'iframe-loaded' })
+  import('~/features/reload-button')
 }

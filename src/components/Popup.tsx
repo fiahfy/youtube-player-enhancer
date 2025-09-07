@@ -11,15 +11,18 @@ import StoreProvider from '~/providers/StoreProvider'
 import { useAppDispatch, useAppSelector } from '~/store'
 import {
   selectElapsedTime,
+  selectReloadButtonEnabled,
   selectSeekButtonsEnabled,
   selectTimestampAnchor,
   setElapsedTime,
+  setReloadButtonEnabled,
   setSeekButtonsEnabled,
   setTimestampAnchor,
 } from '~/store/settings'
 
 const App = () => {
   const elapsedTime = useAppSelector(selectElapsedTime)
+  const reloadButtonEnabled = useAppSelector(selectReloadButtonEnabled)
   const seekButtonsEnabled = useAppSelector(selectSeekButtonsEnabled)
   const timestampAnchor = useAppSelector(selectTimestampAnchor)
   const dispatch = useAppDispatch()
@@ -27,6 +30,13 @@ const App = () => {
   const handleChangeElapsedTime = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.checked
     dispatch(setElapsedTime(value))
+  }
+
+  const handleChangeReloadButtonEnabled = (
+    e: ChangeEvent<HTMLInputElement>,
+  ) => {
+    const value = e.currentTarget.checked
+    dispatch(setReloadButtonEnabled(value))
   }
 
   const handleChangeSeekButtonsEnabled = (e: ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +60,16 @@ const App = () => {
           />
         }
         label="Add 5-second skip controls"
+      />
+      <Typography variant="subtitle2">Chat</Typography>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={reloadButtonEnabled}
+            onChange={handleChangeReloadButtonEnabled}
+          />
+        }
+        label="Add Reload Button"
       />
       <Typography variant="subtitle2">Info</Typography>
       <FormControlLabel

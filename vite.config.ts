@@ -21,6 +21,7 @@ const manifest = defineManifest({
   },
   content_scripts: [
     {
+      all_frames: true,
       matches: ['https://www.youtube.com/*'],
       js: ['src/content-script.ts'],
     },
