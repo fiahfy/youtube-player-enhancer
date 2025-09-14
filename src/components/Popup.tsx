@@ -55,7 +55,7 @@ const App = () => {
 
   return (
     <Container>
-      <Stack spacing={2} sx={{ my: 2 }}>
+      <Stack spacing={2} sx={{ my: 2, userSelect: 'none' }}>
         <FormControl component="fieldset" size="small">
           <FormLabel component="legend">
             <Typography gutterBottom variant="subtitle2">
