@@ -71,7 +71,7 @@ const App = () => {
                   size="small"
                 />
               }
-              label="Add 5-second Skip Controls"
+              label="Add 5-second skip controls"
               slotProps={{ typography: { variant: 'body2' } }}
             />
           </FormGroup>
@@ -91,7 +91,7 @@ const App = () => {
                   size="small"
                 />
               }
-              label="Add Reload Button"
+              label="Add reload button"
               slotProps={{ typography: { variant: 'body2' } }}
             />
           </FormGroup>
@@ -111,7 +111,7 @@ const App = () => {
                   size="small"
                 />
               }
-              label="Always Show Elapsed Time"
+              label="Always show elapsed time"
               slotProps={{ typography: { variant: 'body2' } }}
             />
           </FormGroup>
@@ -131,7 +131,7 @@ const App = () => {
                   size="small"
                 />
               }
-              label="Donot Scroll on Click Timestamp"
+              label="Do not scroll on click timestamp"
               slotProps={{ typography: { variant: 'body2' } }}
             />
           </FormGroup>
