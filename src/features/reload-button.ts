@@ -1,42 +1,81 @@
 import refresh from '~/assets/refresh.svg?raw'
 import type { Settings } from '~/models'
+import { querySelectorAsync } from '~/utils'
 
 const className = 'ype-reload-button'
 let settings: Settings
 
 const addButton = async () => {
-  const refIconButton = document.querySelector(
+  const refButton = document.querySelector(
     '#chat-messages > yt-live-chat-header-renderer > yt-live-chat-button',
   )
-  if (refIconButton?.parentElement?.querySelector(`.${className}`)) {
+  if (!refButton) {
     return
   }
 
-  const liveChatButton = document.createElement('yt-live-chat-button')
-  liveChatButton.classList.add('style-scope', 'yt-live-chat-header-renderer')
-  liveChatButton.title = 'Reload Frame'
-  liveChatButton.onclick = () => location.reload()
-  liveChatButton.classList.add(className)
+  if (refButton.parentElement?.querySelector(`.${className}`)) {
+    return
+  }
 
-  refIconButton?.parentElement?.insertBefore(liveChatButton, refIconButton)
+  // Wait until child elements are added to the DOM
 
-  // insert svg after wrapper button appended
-  // liveChatButton.innerHTML = refresh
+  await querySelectorAsync('.yt-icon-shape > div', {
+    parent: refButton,
+  })
 
-  await new Promise((r) => setTimeout(r, 500))
-  const button = document.createElement('button')
-  button.innerHTML = refresh
+  // Clone elements
 
-  refIconButton?.parentElement
-    ?.querySelector(`.${className} > yt-button-renderer > yt-button-shape`)
-    ?.append(button)
+  const wrapper = refButton.cloneNode(true) as HTMLElement
+
+  const button = (
+    await querySelectorAsync('yt-button-shape > button', {
+      parent: refButton,
+    })
+  )?.cloneNode(true) as HTMLElement
+
+  if (!button) {
+    return
+  }
+
+  // Setup elements
+
+  wrapper.classList.add(className)
+  wrapper.title = 'Reload Frame'
+  wrapper.onclick = () => location.reload()
+
+  const div = button.querySelector('.yt-icon-shape > div')
+  if (!div) {
+    return
+  }
+  div.innerHTML = refresh
+  const svg = button.querySelector('svg')
+  if (!svg) {
+    return
+  }
+  svg.setAttribute('fill', 'currentColor')
+
+  // Insert elements
+
+  refButton.parentElement?.insertBefore(wrapper, refButton)
+
+  const buttonShape = await querySelectorAsync('yt-button-shape', {
+    parent: wrapper,
+  })
+  if (!buttonShape) {
+    return
+  }
+  buttonShape.append(button)
 }
 
 const removeButton = () => {
-  const refIconButton = document.querySelector(
-    '#chat-messages > yt-live-chat-header-renderer > yt-icon-button',
+  const refButton = document.querySelector(
+    '#chat-messages > yt-live-chat-header-renderer > yt-live-chat-button',
   )
-  const button = refIconButton?.parentElement?.querySelector(`.${className}`)
+  if (!refButton) {
+    return
+  }
+
+  const button = refButton.parentElement?.querySelector(`.${className}`)
   button?.remove()
 }
 
@@ -49,8 +88,9 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   switch (type) {
     case 'settings-changed':
       settings = data.settings
-      init()
-      return sendResponse()
+      console.log('settings-changed', settings)
+      init().then(() => sendResponse())
+      return true
   }
 })
 

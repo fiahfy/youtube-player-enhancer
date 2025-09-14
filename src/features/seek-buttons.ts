@@ -1,7 +1,7 @@
 import forward from '~/assets/forward.svg?raw'
 import replay from '~/assets/replay.svg?raw'
 import type { Settings } from '~/models'
-import { isVideoUrl } from '~/utils/url'
+import { isVideoUrl } from '~/utils'
 
 type ButtonConfig = {
   title: string

@@ -1,8 +1,12 @@
 import {
+  Container,
   CssBaseline,
+  FormControl,
   FormControlLabel,
   FormGroup,
+  FormLabel,
   GlobalStyles,
+  Stack,
   Switch,
   Typography,
 } from '@mui/material'
@@ -50,45 +54,90 @@ const App = () => {
   }
 
   return (
-    <FormGroup sx={{ mx: 2, my: 1 }}>
-      <Typography variant="subtitle2">Player</Typography>
-      <FormControlLabel
-        control={
-          <Switch
-            checked={seekButtonsEnabled}
-            onChange={handleChangeSeekButtonsEnabled}
-          />
-        }
-        label="Add 5-second skip controls"
-      />
-      <Typography variant="subtitle2">Chat</Typography>
-      <FormControlLabel
-        control={
-          <Switch
-            checked={reloadButtonEnabled}
-            onChange={handleChangeReloadButtonEnabled}
-          />
-        }
-        label="Add Reload Button"
-      />
-      <Typography variant="subtitle2">Info</Typography>
-      <FormControlLabel
-        control={
-          <Switch checked={elapsedTime} onChange={handleChangeElapsedTime} />
-        }
-        label="Always Show Elapsed Time"
-      />
-      <Typography variant="subtitle2">Comments</Typography>
-      <FormControlLabel
-        control={
-          <Switch
-            checked={timestampAnchor}
-            onChange={handleChangeTimestampAnchor}
-          />
-        }
-        label="Donot Scroll on Click Timestamp"
-      />
-    </FormGroup>
+    <Container>
+      <Stack spacing={2} sx={{ my: 2 }}>
+        <FormControl component="fieldset" size="small">
+          <FormLabel component="legend">
+            <Typography gutterBottom variant="subtitle2">
+              Player
+            </Typography>
+          </FormLabel>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={seekButtonsEnabled}
+                  onChange={handleChangeSeekButtonsEnabled}
+                  size="small"
+                />
+              }
+              label="Add 5-second Skip Controls"
+              slotProps={{ typography: { variant: 'body2' } }}
+            />
+          </FormGroup>
+        </FormControl>
+        <FormControl component="fieldset" size="small">
+          <FormLabel component="legend">
+            <Typography gutterBottom variant="subtitle2">
+              Chat
+            </Typography>
+          </FormLabel>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={reloadButtonEnabled}
+                  onChange={handleChangeReloadButtonEnabled}
+                  size="small"
+                />
+              }
+              label="Add Reload Button"
+              slotProps={{ typography: { variant: 'body2' } }}
+            />
+          </FormGroup>
+        </FormControl>
+        <FormControl component="fieldset" size="small">
+          <FormLabel component="legend">
+            <Typography gutterBottom variant="subtitle2">
+              Info
+            </Typography>
+          </FormLabel>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={elapsedTime}
+                  onChange={handleChangeElapsedTime}
+                  size="small"
+                />
+              }
+              label="Always Show Elapsed Time"
+              slotProps={{ typography: { variant: 'body2' } }}
+            />
+          </FormGroup>
+        </FormControl>
+        <FormControl component="fieldset" size="small">
+          <FormLabel component="legend">
+            <Typography gutterBottom variant="subtitle2">
+              Comments
+            </Typography>
+          </FormLabel>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={timestampAnchor}
+                  onChange={handleChangeTimestampAnchor}
+                  size="small"
+                />
+              }
+              label="Donot Scroll on Click Timestamp"
+              slotProps={{ typography: { variant: 'body2' } }}
+            />
+          </FormGroup>
+        </FormControl>
+      </Stack>
+    </Container>
   )
 }
 
@@ -98,7 +147,7 @@ const Popup = () => {
       <CssBaseline />
       <GlobalStyles
         styles={{
-          html: { overflowY: 'hidden', width: 460 },
+          html: { overflowY: 'hidden', width: 300 },
         }}
       />
       <App />

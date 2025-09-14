@@ -1,5 +1,5 @@
 import type { Settings } from '~/models'
-import { isVideoUrl } from '~/utils/url'
+import { isVideoUrl } from '~/utils'
 
 let settings: Settings
 
