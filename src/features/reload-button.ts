@@ -88,7 +88,6 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   switch (type) {
     case 'settings-changed':
       settings = data.settings
-      console.log('settings-changed', settings)
       init().then(() => sendResponse())
       return true
   }
