@@ -1,4 +1,4 @@
-import './content-script.css'
+import '~/content-script.css'
 
 if (self === top) {
   chrome.runtime.sendMessage({ type: 'loaded' })
