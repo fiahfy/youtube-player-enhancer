@@ -1,6 +1,6 @@
 export const isVideoUrl = () => new URL(location.href).pathname === '/watch'
 
-export const querySelectorAsync = (
+export const querySelectorAsync = <T extends Element = Element>(
   selector: string,
   options: Partial<{
     parent: Element | null
@@ -11,13 +11,13 @@ export const querySelectorAsync = (
   const { parent = document, interval = 100, timeout = 10000 } = options
 
   if (!parent) {
-    return null
+    return Promise.resolve(null)
   }
 
-  return new Promise<Element | null>((resolve) => {
+  return new Promise<T | null>((resolve) => {
     const expireTime = Date.now() + timeout
     const timer = window.setInterval(() => {
-      const e = parent.querySelector(selector)
+      const e = parent.querySelector<T>(selector)
       if (e || Date.now() > expireTime) {
         clearInterval(timer)
         resolve(e)

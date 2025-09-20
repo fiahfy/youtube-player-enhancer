@@ -1,6 +1,5 @@
 export type Settings = {
-  elapsedTime: boolean
+  preventTimestampScroll: boolean
   reloadButtonEnabled: boolean
   seekButtonsEnabled: boolean
-  timestampAnchor: boolean
 }

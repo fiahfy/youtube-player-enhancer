@@ -1,42 +1,44 @@
 import type { Settings } from '~/models'
-import { isVideoUrl } from '~/utils'
+import { isVideoUrl, querySelectorAsync } from '~/utils'
 
 let settings: Settings
 
-const handleClick = (e: MouseEvent, target?: HTMLElement) => {
-  const currentTarget = (target ?? e.target) as HTMLElement
-  if (currentTarget.tagName.toLowerCase() === 'a') {
-    const match = currentTarget.getAttribute('href')?.match(/&t=(\d+)s$/)
-    if (match) {
-      const video = document.querySelector('video.video-stream')
-      if (video instanceof HTMLVideoElement) {
-        e.preventDefault()
-        e.stopPropagation()
-        video.currentTime = Number(match[1])
-      }
-    }
-  } else if (!currentTarget.parentElement) {
-    // end
-  } else {
-    handleClick(e, currentTarget.parentElement)
+const handleClick = (e: MouseEvent) => {
+  const target = e.target as HTMLElement
+  if (target.tagName.toLowerCase() !== 'a') {
+    return
+  }
+  const match = target.getAttribute('href')?.match(/&t=(\d+)s(&|$)/)
+  if (!match) {
+    return
+  }
+  const video = document.querySelector('video.video-stream')
+  if (video instanceof HTMLVideoElement) {
+    e.preventDefault()
+    e.stopPropagation()
+    video.currentTime = Number(match[1])
   }
 }
 
-const addEventListeners = () => {
-  const el = document.querySelector<HTMLElement>('ytd-comments')
-  el?.addEventListener('click', handleClick)
+const addEventListeners = async () => {
+  const el = await querySelectorAsync<HTMLElement>('ytd-comments')
+  el?.addEventListener('click', handleClick, { capture: true })
 }
 
-const removeEventListeners = () => {
-  const el = document.querySelector<HTMLElement>('ytd-comments')
-  el?.removeEventListener('click', handleClick)
+const removeEventListeners = async () => {
+  const el = await querySelectorAsync<HTMLElement>('ytd-comments')
+  el?.removeEventListener('click', handleClick, { capture: true })
 }
 
 const init = async () => {
   if (!isVideoUrl()) {
     return
   }
-  settings.timestampAnchor ? addEventListeners() : removeEventListeners()
+  if (settings.preventTimestampScroll) {
+    await addEventListeners()
+  } else {
+    await removeEventListeners()
+  }
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {

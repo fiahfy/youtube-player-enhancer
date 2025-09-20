@@ -14,26 +14,25 @@ import type { ChangeEvent } from 'react'
 import StoreProvider from '~/providers/StoreProvider'
 import { useAppDispatch, useAppSelector } from '~/store'
 import {
-  selectElapsedTime,
+  selectPreventTimestampScroll,
   selectReloadButtonEnabled,
   selectSeekButtonsEnabled,
-  selectTimestampAnchor,
-  setElapsedTime,
+  setPreventTimestampScroll,
   setReloadButtonEnabled,
   setSeekButtonsEnabled,
-  setTimestampAnchor,
 } from '~/store/settings'
 
 const App = () => {
-  const elapsedTime = useAppSelector(selectElapsedTime)
+  const preventTimestampScroll = useAppSelector(selectPreventTimestampScroll)
   const reloadButtonEnabled = useAppSelector(selectReloadButtonEnabled)
   const seekButtonsEnabled = useAppSelector(selectSeekButtonsEnabled)
-  const timestampAnchor = useAppSelector(selectTimestampAnchor)
   const dispatch = useAppDispatch()
 
-  const handleChangeElapsedTime = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangePreventTimestampScroll = (
+    e: ChangeEvent<HTMLInputElement>,
+  ) => {
     const value = e.currentTarget.checked
-    dispatch(setElapsedTime(value))
+    dispatch(setPreventTimestampScroll(value))
   }
 
   const handleChangeReloadButtonEnabled = (
@@ -46,11 +45,6 @@ const App = () => {
   const handleChangeSeekButtonsEnabled = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.checked
     dispatch(setSeekButtonsEnabled(value))
-  }
-
-  const handleChangeTimestampAnchor = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.checked
-    dispatch(setTimestampAnchor(value))
   }
 
   return (
@@ -99,26 +93,6 @@ const App = () => {
         <FormControl component="fieldset" size="small">
           <FormLabel component="legend">
             <Typography gutterBottom variant="subtitle2">
-              Info
-            </Typography>
-          </FormLabel>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={elapsedTime}
-                  onChange={handleChangeElapsedTime}
-                  size="small"
-                />
-              }
-              label="Always show elapsed time"
-              slotProps={{ typography: { variant: 'body2' } }}
-            />
-          </FormGroup>
-        </FormControl>
-        <FormControl component="fieldset" size="small">
-          <FormLabel component="legend">
-            <Typography gutterBottom variant="subtitle2">
               Comments
             </Typography>
           </FormLabel>
@@ -126,12 +100,12 @@ const App = () => {
             <FormControlLabel
               control={
                 <Switch
-                  checked={timestampAnchor}
-                  onChange={handleChangeTimestampAnchor}
+                  checked={preventTimestampScroll}
+                  onChange={handleChangePreventTimestampScroll}
                   size="small"
                 />
               }
-              label="Do not scroll on click timestamp"
+              label="Prevent scrolling on timestamp click"
               slotProps={{ typography: { variant: 'body2' } }}
             />
           </FormGroup>
@@ -147,7 +121,7 @@ const Popup = () => {
       <CssBaseline />
       <GlobalStyles
         styles={{
-          html: { overflowY: 'hidden', width: 300 },
+          html: { overflowY: 'hidden', width: 320 },
         }}
       />
       <App />
