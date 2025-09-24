@@ -9,36 +9,41 @@ import type { AppState } from '~/store'
 type State = Settings
 
 export const initialState: State = {
+  enableSkipControls: false,
   preventTimestampScroll: false,
   reloadButtonEnabled: false,
-  seekButtonsEnabled: false,
 }
 
 export const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
+    setEnableSkipControls(state, action: PayloadAction<boolean>) {
+      return { ...state, enableSkipControls: action.payload }
+    },
     setPreventTimestampScroll(state, action: PayloadAction<boolean>) {
       return { ...state, preventTimestampScroll: action.payload }
     },
     setReloadButtonEnabled(state, action: PayloadAction<boolean>) {
       return { ...state, reloadButtonEnabled: action.payload }
     },
-    setSeekButtonsEnabled(state, action: PayloadAction<boolean>) {
-      return { ...state, seekButtonsEnabled: action.payload }
-    },
   },
 })
 
 export const {
+  setEnableSkipControls,
   setPreventTimestampScroll,
   setReloadButtonEnabled,
-  setSeekButtonsEnabled,
 } = settingsSlice.actions
 
 export default settingsSlice.reducer
 
 export const selectSettings = (state: AppState) => state.settings
+
+export const selectEnableSkipControls = createSelector(
+  selectSettings,
+  (settings) => settings.enableSkipControls,
+)
 
 export const selectPreventTimestampScroll = createSelector(
   selectSettings,
@@ -48,9 +53,4 @@ export const selectPreventTimestampScroll = createSelector(
 export const selectReloadButtonEnabled = createSelector(
   selectSettings,
   (settings) => settings.reloadButtonEnabled,
-)
-
-export const selectSeekButtonsEnabled = createSelector(
-  selectSettings,
-  (settings) => settings.seekButtonsEnabled,
 )

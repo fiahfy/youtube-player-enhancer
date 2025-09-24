@@ -163,7 +163,7 @@ const init = async () => {
   if (!isVideoUrl()) {
     return
   }
-  settings.seekButtonsEnabled ? await enableControls() : disableControls()
+  settings.enableSkipControls ? await enableControls() : disableControls()
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {

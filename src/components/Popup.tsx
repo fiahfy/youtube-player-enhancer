@@ -14,18 +14,18 @@ import type { ChangeEvent } from 'react'
 import StoreProvider from '~/providers/StoreProvider'
 import { useAppDispatch, useAppSelector } from '~/store'
 import {
+  selectEnableSkipControls,
   selectPreventTimestampScroll,
   selectReloadButtonEnabled,
-  selectSeekButtonsEnabled,
+  setEnableSkipControls,
   setPreventTimestampScroll,
   setReloadButtonEnabled,
-  setSeekButtonsEnabled,
 } from '~/store/settings'
 
 const App = () => {
+  const enableSkipControls = useAppSelector(selectEnableSkipControls)
   const preventTimestampScroll = useAppSelector(selectPreventTimestampScroll)
   const reloadButtonEnabled = useAppSelector(selectReloadButtonEnabled)
-  const seekButtonsEnabled = useAppSelector(selectSeekButtonsEnabled)
   const dispatch = useAppDispatch()
 
   const handleChangePreventTimestampScroll = (
@@ -42,9 +42,9 @@ const App = () => {
     dispatch(setReloadButtonEnabled(value))
   }
 
-  const handleChangeSeekButtonsEnabled = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEnableSkipControls = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.checked
-    dispatch(setSeekButtonsEnabled(value))
+    dispatch(setEnableSkipControls(value))
   }
 
   return (
@@ -60,8 +60,8 @@ const App = () => {
             <FormControlLabel
               control={
                 <Switch
-                  checked={seekButtonsEnabled}
-                  onChange={handleChangeSeekButtonsEnabled}
+                  checked={enableSkipControls}
+                  onChange={handleChangeEnableSkipControls}
                   size="small"
                 />
               }
