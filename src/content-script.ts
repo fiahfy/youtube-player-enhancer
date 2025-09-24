@@ -1,6 +1,6 @@
 import '~/content-script.css'
 
 import('~/features/skip-controls')
-import('~/features/timestamp-anchor')
+import('~/features/timestamp-scroll')
 
 chrome.runtime.sendMessage({ type: 'loaded' })
