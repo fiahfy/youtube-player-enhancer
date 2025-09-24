@@ -80,7 +80,7 @@ const removeButton = () => {
 }
 
 const init = async () => {
-  settings.reloadButtonEnabled ? await addButton() : removeButton()
+  settings.enableReloadButton ? await addButton() : removeButton()
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {

@@ -9,36 +9,41 @@ import type { AppState } from '~/store'
 type State = Settings
 
 export const initialState: State = {
+  enableReloadButton: false,
   enableSkipControls: false,
   preventTimestampScroll: false,
-  reloadButtonEnabled: false,
 }
 
 export const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
+    setEnableReloadButton(state, action: PayloadAction<boolean>) {
+      return { ...state, enableReloadButton: action.payload }
+    },
     setEnableSkipControls(state, action: PayloadAction<boolean>) {
       return { ...state, enableSkipControls: action.payload }
     },
     setPreventTimestampScroll(state, action: PayloadAction<boolean>) {
       return { ...state, preventTimestampScroll: action.payload }
     },
-    setReloadButtonEnabled(state, action: PayloadAction<boolean>) {
-      return { ...state, reloadButtonEnabled: action.payload }
-    },
   },
 })
 
 export const {
+  setEnableReloadButton,
   setEnableSkipControls,
   setPreventTimestampScroll,
-  setReloadButtonEnabled,
 } = settingsSlice.actions
 
 export default settingsSlice.reducer
 
 export const selectSettings = (state: AppState) => state.settings
+
+export const selectEnableReloadButton = createSelector(
+  selectSettings,
+  (settings) => settings.enableReloadButton,
+)
 
 export const selectEnableSkipControls = createSelector(
   selectSettings,
@@ -48,9 +53,4 @@ export const selectEnableSkipControls = createSelector(
 export const selectPreventTimestampScroll = createSelector(
   selectSettings,
   (settings) => settings.preventTimestampScroll,
-)
-
-export const selectReloadButtonEnabled = createSelector(
-  selectSettings,
-  (settings) => settings.reloadButtonEnabled,
 )

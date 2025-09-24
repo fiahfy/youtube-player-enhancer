@@ -14,37 +14,35 @@ import type { ChangeEvent } from 'react'
 import StoreProvider from '~/providers/StoreProvider'
 import { useAppDispatch, useAppSelector } from '~/store'
 import {
+  selectEnableReloadButton,
   selectEnableSkipControls,
   selectPreventTimestampScroll,
-  selectReloadButtonEnabled,
+  setEnableReloadButton,
   setEnableSkipControls,
   setPreventTimestampScroll,
-  setReloadButtonEnabled,
 } from '~/store/settings'
 
 const App = () => {
+  const enableReloadButton = useAppSelector(selectEnableReloadButton)
   const enableSkipControls = useAppSelector(selectEnableSkipControls)
   const preventTimestampScroll = useAppSelector(selectPreventTimestampScroll)
-  const reloadButtonEnabled = useAppSelector(selectReloadButtonEnabled)
   const dispatch = useAppDispatch()
+
+  const handleChangeEnableReloadButton = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.checked
+    dispatch(setEnableReloadButton(value))
+  }
+
+  const handleChangeEnableSkipControls = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.checked
+    dispatch(setEnableSkipControls(value))
+  }
 
   const handleChangePreventTimestampScroll = (
     e: ChangeEvent<HTMLInputElement>,
   ) => {
     const value = e.currentTarget.checked
     dispatch(setPreventTimestampScroll(value))
-  }
-
-  const handleChangeReloadButtonEnabled = (
-    e: ChangeEvent<HTMLInputElement>,
-  ) => {
-    const value = e.currentTarget.checked
-    dispatch(setReloadButtonEnabled(value))
-  }
-
-  const handleChangeEnableSkipControls = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.checked
-    dispatch(setEnableSkipControls(value))
   }
 
   return (
@@ -80,8 +78,8 @@ const App = () => {
             <FormControlLabel
               control={
                 <Switch
-                  checked={reloadButtonEnabled}
-                  onChange={handleChangeReloadButtonEnabled}
+                  checked={enableReloadButton}
+                  onChange={handleChangeEnableReloadButton}
                   size="small"
                 />
               }
