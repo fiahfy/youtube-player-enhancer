@@ -21,9 +21,13 @@ const manifest = defineManifest({
   },
   content_scripts: [
     {
-      all_frames: true,
       matches: ['https://www.youtube.com/*'],
       js: ['src/content-script.ts'],
+    },
+    {
+      matches: ['https://www.youtube.com/live_chat*'],
+      js: ['src/content-script-frame.ts'],
+      all_frames: true,
     },
   ],
   action: {
