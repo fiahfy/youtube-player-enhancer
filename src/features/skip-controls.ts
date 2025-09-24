@@ -138,15 +138,6 @@ const setupControlsLoop = async () => {
   })
 }
 
-const disableControls = () => {
-  const video = document.querySelector('ytd-watch-flexy video.html5-main-video')
-  if (video) {
-    video.removeEventListener('loadedmetadata', setupControlsLoop)
-  }
-  clearInterval(timer)
-  removeControls()
-}
-
 const enableControls = async () => {
   await setupControlsLoop()
 
@@ -157,6 +148,15 @@ const enableControls = async () => {
     return
   }
   video.addEventListener('loadedmetadata', setupControlsLoop)
+}
+
+const disableControls = () => {
+  const video = document.querySelector('ytd-watch-flexy video.html5-main-video')
+  if (video) {
+    video.removeEventListener('loadedmetadata', setupControlsLoop)
+  }
+  clearInterval(timer)
+  removeControls()
 }
 
 const init = async () => {
