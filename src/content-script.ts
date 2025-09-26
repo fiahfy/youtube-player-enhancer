@@ -1,4 +1,3 @@
 import '~/content-script.css'
-
-import('~/features/skip-controls')
-import('~/features/timestamp-scroll')
+import '~/features/skip-controls'
+import '~/features/timestamp-scroll'
