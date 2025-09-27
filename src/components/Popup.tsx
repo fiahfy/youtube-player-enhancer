@@ -14,19 +14,37 @@ import type { ChangeEvent } from 'react'
 import StoreProvider from '~/providers/StoreProvider'
 import { useAppDispatch, useAppSelector } from '~/store'
 import {
+  selectAutoCloseLiveChatPoll,
+  selectAutoShowLiveChat,
   selectEnableReloadButton,
   selectEnableSkipControls,
   selectPreventTimestampScroll,
+  setAutoCloseLiveChatPoll,
+  setAutoShowLiveChat,
   setEnableReloadButton,
   setEnableSkipControls,
   setPreventTimestampScroll,
 } from '~/store/settings'
 
 const App = () => {
+  const autoCloseLiveChatPoll = useAppSelector(selectAutoCloseLiveChatPoll)
+  const autoShowLiveChat = useAppSelector(selectAutoShowLiveChat)
   const enableReloadButton = useAppSelector(selectEnableReloadButton)
   const enableSkipControls = useAppSelector(selectEnableSkipControls)
   const preventTimestampScroll = useAppSelector(selectPreventTimestampScroll)
   const dispatch = useAppDispatch()
+
+  const handleChangeAutoCloseLiveChatPoll = (
+    e: ChangeEvent<HTMLInputElement>,
+  ) => {
+    const value = e.currentTarget.checked
+    dispatch(setAutoCloseLiveChatPoll(value))
+  }
+
+  const handleChangeAutoShowLiveChat = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.checked
+    dispatch(setAutoShowLiveChat(value))
+  }
 
   const handleChangeEnableReloadButton = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.checked
@@ -84,6 +102,28 @@ const App = () => {
                 />
               }
               label="Add reload button"
+              slotProps={{ typography: { variant: 'body2' } }}
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={autoShowLiveChat}
+                  onChange={handleChangeAutoShowLiveChat}
+                  size="small"
+                />
+              }
+              label="Automatically show live chat"
+              slotProps={{ typography: { variant: 'body2' } }}
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={autoCloseLiveChatPoll}
+                  onChange={handleChangeAutoCloseLiveChatPoll}
+                  size="small"
+                />
+              }
+              label="Automatically close live chat poll"
               slotProps={{ typography: { variant: 'body2' } }}
             />
           </FormGroup>

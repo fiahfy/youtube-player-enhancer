@@ -1,27 +1,45 @@
 export const isVideoUrl = () => new URL(location.href).pathname === '/watch'
 
-export const querySelectorAsync = <T extends Element = Element>(
+export const querySelectorAsync = async <T extends Element = Element>(
   selector: string,
   options: Partial<{
-    parent: Element | null
+    root: Element
     interval: number
     timeout: number
   }> = {},
 ) => {
-  const { parent = document, interval = 100, timeout = 10000 } = options
+  const { root = document, ...others } = options
 
-  if (!parent) {
-    return Promise.resolve(null)
+  try {
+    return await waitUntil(() => root.querySelector<T>(selector), others)
+  } catch {
+    return null
   }
+}
 
-  return new Promise<T | null>((resolve) => {
+export const waitUntil = <T>(
+  predicate: () => T | Promise<T>,
+  {
+    interval = 100,
+    timeout = 10000,
+  }: Partial<{ interval: number; timeout: number }> = {},
+) => {
+  return new Promise<T>((resolve, reject) => {
     const expireTime = Date.now() + timeout
-    const timer = window.setInterval(() => {
-      const e = parent.querySelector<T>(selector)
-      if (e || Date.now() > expireTime) {
-        clearInterval(timer)
-        resolve(e)
+
+    const check = async () => {
+      const result = await predicate()
+      if (result) {
+        return resolve(result)
       }
-    }, interval)
+
+      if (Date.now() > expireTime) {
+        return reject(new Error('Timeout'))
+      }
+
+      setTimeout(check, interval)
+    }
+
+    check()
   })
 }

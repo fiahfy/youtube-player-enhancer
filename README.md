@@ -6,9 +6,11 @@
 
 ## Features
 
-- Add seek buttons to the bottom controls.
+- Add skip controls to the bottom controls.
 - Add a reload button to the chat menu.
 - Do not scroll when clicking a timestamp.
+- Automatically show the chat when closed.
+- Automatically close polls in the chat.
 
 ## Screenshots
 

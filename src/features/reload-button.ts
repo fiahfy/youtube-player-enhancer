@@ -20,7 +20,7 @@ const addButton = async () => {
   // Wait until child elements are added to the DOM
 
   await querySelectorAsync('.yt-icon-shape > div', {
-    parent: refButton,
+    root: refButton,
   })
 
   // Clone elements
@@ -29,7 +29,7 @@ const addButton = async () => {
 
   const button = (
     await querySelectorAsync('yt-button-shape > button', {
-      parent: refButton,
+      root: refButton,
     })
   )?.cloneNode(true) as HTMLElement
 
@@ -59,7 +59,7 @@ const addButton = async () => {
   refButton.parentElement?.insertBefore(wrapper, refButton)
 
   const buttonShape = await querySelectorAsync('yt-button-shape', {
-    parent: wrapper,
+    root: wrapper,
   })
   if (!buttonShape) {
     return
