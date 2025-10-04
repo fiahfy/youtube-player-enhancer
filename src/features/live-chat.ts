@@ -1,5 +1,5 @@
 import type { Settings } from '~/models'
-import { isVideoUrl, querySelectorAsync, waitUntil } from '~/utils'
+import { isVideoUrl, waitUntil } from '~/utils'
 
 let settings: Settings
 
@@ -12,28 +12,33 @@ const init = async () => {
     return
   }
 
-  await waitUntil(async () => {
-    const button = await querySelectorAsync<HTMLElement>('#show-hide-button')
-    if (!button) {
-      return false
-    }
-    if (button.hidden) {
-      return true
-    }
+  let button: HTMLElement | undefined
 
-    const renderer = await querySelectorAsync<HTMLElement>(
-      'ytd-button-renderer',
-      { root: button },
-    )
-    if (!renderer) {
-      return false
-    }
+  try {
+    button = await waitUntil(async () => {
+      const button = document.querySelector<HTMLElement>('#show-hide-button')
+      if (!button) {
+        return undefined
+      }
+      if (button.hidden) {
+        return undefined
+      }
+      return button
+    })
+  } catch {
+    return
+  }
 
-    // Wait a moment since the click event isn’t working
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    renderer.click()
-    return false
-  })
+  if (!button) {
+    return
+  }
+
+  const renderer = button.querySelector<HTMLElement>('ytd-button-renderer')
+  if (!renderer) {
+    return
+  }
+
+  renderer.click()
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {

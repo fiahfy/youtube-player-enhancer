@@ -21,7 +21,7 @@ export const waitUntil = <T>(
   predicate: () => T | Promise<T>,
   {
     interval = 100,
-    timeout = 10000,
+    timeout = 3000,
   }: Partial<{ interval: number; timeout: number }> = {},
 ) => {
   return new Promise<T>((resolve, reject) => {
