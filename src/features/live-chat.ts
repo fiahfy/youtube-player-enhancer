@@ -1,7 +1,8 @@
 import type { Settings } from '~/models'
-import { isVideoUrl, waitUntil } from '~/utils'
+import { isVideoUrl } from '~/utils'
 
 let settings: Settings
+let timer: number
 
 const init = async () => {
   if (!isVideoUrl()) {
@@ -12,33 +13,30 @@ const init = async () => {
     return
   }
 
-  let button: HTMLElement | undefined
+  clearInterval(timer)
 
-  try {
-    button = await waitUntil(async () => {
-      const button = document.querySelector<HTMLElement>('#show-hide-button')
-      if (!button) {
-        return undefined
-      }
-      if (button.hidden) {
-        return undefined
-      }
-      return button
-    })
-  } catch {
-    return
-  }
+  const expireTime = Date.now() + 3000
 
-  if (!button) {
-    return
-  }
+  timer = setInterval(() => {
+    if (Date.now() > expireTime) {
+      return clearInterval(timer)
+    }
 
-  const renderer = button.querySelector<HTMLElement>('ytd-button-renderer')
-  if (!renderer) {
-    return
-  }
+    const button = document.querySelector<HTMLElement>('#show-hide-button')
+    if (!button) {
+      return
+    }
+    if (button.hidden) {
+      return
+    }
 
-  renderer.click()
+    const renderer = button.querySelector<HTMLElement>('ytd-button-renderer')
+    if (!renderer) {
+      return
+    }
+
+    renderer.click()
+  }, 100)
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
