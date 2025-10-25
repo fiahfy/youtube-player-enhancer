@@ -6,6 +6,7 @@ import { isVideoUrl } from '~/utils'
 type ButtonConfig = {
   title: string
   className: string
+  baseClassNames: string[]
   svg: string
   key: string
   code: string
@@ -16,6 +17,7 @@ const buttonConfigs: ButtonConfig[] = [
   {
     title: 'Seek backward 5s（←）',
     className: 'ype-backward-button',
+    baseClassNames: ['ytp-prev-button'],
     svg: replay,
     key: 'ArrowLeft',
     code: 'ArrowLeft',
@@ -24,6 +26,7 @@ const buttonConfigs: ButtonConfig[] = [
   {
     title: 'Seek forward 5s（→）',
     className: 'ype-forward-button',
+    baseClassNames: ['ytp-next-button', 'ytp-playlist-ui'],
     svg: forward,
     key: 'ArrowRight',
     code: 'ArrowRight',
@@ -39,9 +42,8 @@ let timer = -1
 
 const createButton = (config: ButtonConfig) => {
   const button = document.createElement('button')
-  button.classList.add('ytp-button')
+  button.classList.add('ytp-button', ...config.baseClassNames)
   button.title = config.title
-  button.disabled = true
   button.onclick = () => {
     const e = new KeyboardEvent('keydown', {
       bubbles: true,
@@ -52,14 +54,6 @@ const createButton = (config: ButtonConfig) => {
     document.documentElement.dispatchEvent(e)
   }
   button.innerHTML = config.svg
-
-  const svg = button.querySelector('svg')
-  if (svg) {
-    svg.setAttribute('viewBox', '-8 -8 40 40')
-    svg.style.fill = 'white'
-    svg.style.width = '48'
-    svg.style.height = '48'
-  }
 
   return button
 }
@@ -80,24 +74,6 @@ const setupControls = () => {
     const button = createButton(config)
     button.classList.add(config.className)
     volumeArea.parentElement.insertBefore(button, volumeArea)
-  }
-
-  const bar = document.querySelector(
-    '.ytp-chrome-bottom .ytp-progress-bar-container',
-  )
-  if (!bar) {
-    return
-  }
-
-  const disabled = bar.getAttribute('aria-disabled') === 'true'
-
-  for (const config of buttonConfigs) {
-    const button = document.querySelector<HTMLButtonElement>(
-      `.${config.className}`,
-    )
-    if (button) {
-      button.disabled = disabled
-    }
   }
 }
 

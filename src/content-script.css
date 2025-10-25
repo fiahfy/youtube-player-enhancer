@@ -1,5 +1,12 @@
-.ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls .ype-backward-button,
-.ytp-chrome-bottom .ytp-chrome-controls .ytp-left-controls .ype-forward-button {
+.ype-backward-button,
+.ype-forward-button {
   flex-shrink: 0;
   padding: 0;
+  box-sizing: content-box;
+  svg {
+    width: 24px;
+    height: 24px;
+    padding: 8px 12px;
+    fill: white;
+  }
 }
