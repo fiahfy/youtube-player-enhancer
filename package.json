@@ -1,6 +1,6 @@
 {
   "name": "youtube-player-enhancer",
-  "description": "Chrome Extension for Player Enhancer on YouTube.",
+  "description": "Chrome extension that enhances the YouTube player experience.",
   "version": "0.0.12",
   "dependencies": {
     "@emotion/react": "11.14.0",

@@ -2,15 +2,15 @@
 
 [![Create Release](https://github.com/fiahfy/youtube-player-enhancer/actions/workflows/create-release.yml/badge.svg)](https://github.com/fiahfy/youtube-player-enhancer/actions/workflows/create-release.yml)
 
-> Chrome Extension for Player Enhancer on YouTube.
+> Chrome extension that enhances the YouTube player experience.
 
 ## Features
 
-- Add skip controls to the bottom controls.
-- Add a reload button to the chat menu.
-- Do not scroll when clicking a timestamp.
-- Automatically show the chat when closed.
-- Automatically close polls in the chat.
+- Adds skip controls to the player control bar.
+- Adds a reload button to the live chat menu.
+- Prevents the page from scrolling when clicking timestamps.
+- Automatically opens the live chat when it is closed.
+- Automatically closes polls in the live chat.
 
 ## Screenshots
 
