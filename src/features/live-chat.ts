@@ -1,5 +1,5 @@
 import type { Settings } from '~/models'
-import { isVideoUrl, querySelectorAsync } from '~/utils'
+import { isVideoUrl, waitUntil } from '~/utils'
 
 let settings: Settings
 
@@ -12,11 +12,27 @@ const init = async () => {
     return
   }
 
-  const button = await querySelectorAsync<HTMLElement>(
-    'yt-video-metadata-carousel-view-model',
-  )
-  if (button) {
-    button.click()
+  try {
+    await waitUntil(() => {
+      const el = document.querySelector<HTMLElement>('#chat')
+      if (!el) {
+        return false
+      }
+      const hidden = el.hasAttribute('hide-chat-frame')
+      if (!hidden) {
+        return false
+      }
+      const button = document.querySelector<HTMLElement>(
+        'yt-video-metadata-carousel-view-model',
+      )
+      if (!button) {
+        return false
+      }
+      button.click()
+      return true
+    })
+  } catch {
+    // noop
   }
 }
 
