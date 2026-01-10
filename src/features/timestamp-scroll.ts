@@ -1,14 +1,17 @@
 import type { Settings } from '~/models'
 import { isVideoUrl, querySelectorAsync } from '~/utils'
 
+const selectors = ['body #description', 'ytd-comments']
+
 let settings: Settings
 
 const handleClick = (e: MouseEvent) => {
   const target = e.target as HTMLElement
-  if (target.tagName.toLowerCase() !== 'a') {
+  const anchor = target.closest('a')
+  if (!anchor) {
     return
   }
-  const match = target.getAttribute('href')?.match(/&t=(\d+)s(&|$)/)
+  const match = anchor.getAttribute('href')?.match(/&t=(\d+)s(&|$)/)
   if (!match) {
     return
   }
@@ -21,13 +24,17 @@ const handleClick = (e: MouseEvent) => {
 }
 
 const addEventListeners = async () => {
-  const el = await querySelectorAsync<HTMLElement>('ytd-comments')
-  el?.addEventListener('click', handleClick, { capture: true })
+  selectors.forEach(async (selector) => {
+    const el = await querySelectorAsync<HTMLElement>(selector)
+    el?.addEventListener('click', handleClick, { capture: true })
+  })
 }
 
 const removeEventListeners = async () => {
-  const el = await querySelectorAsync<HTMLElement>('ytd-comments')
-  el?.removeEventListener('click', handleClick, { capture: true })
+  selectors.forEach(async (selector) => {
+    const el = await querySelectorAsync<HTMLElement>(selector)
+    el?.removeEventListener('click', handleClick, { capture: true })
+  })
 }
 
 const init = async () => {
