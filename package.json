@@ -27,7 +27,7 @@
     "@vitejs/plugin-react": "5.0.4",
     "husky": "9.1.7",
     "typescript": "5.9.3",
-    "vite": "7.1.9",
+    "vite": "7.1.11",
     "vite-plugin-zip-pack": "1.2.4",
     "vite-tsconfig-paths": "5.1.4"
   },
