@@ -1,4 +1,9 @@
-export const isVideoUrl = () => new URL(location.href).pathname === '/watch'
+export const isVideoUrl = () => {
+  const pathname = new URL(location.href).pathname
+  return ['^/watch', '^/live/.*', '^/@.*/live'].some((p) =>
+    new RegExp(p).test(pathname),
+  )
+}
 
 export const querySelectorAsync = async <T extends Element = Element>(
   selector: string,
