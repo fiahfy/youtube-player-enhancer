@@ -12,6 +12,9 @@ const init = async () => {
     return
   }
 
+  // Wait a moment as the chat opens automatically
+  await new Promise<void>((r) => setTimeout(() => r(), 1000))
+
   try {
     await waitUntil(() => {
       const el = document.querySelector<HTMLElement>('#chat')
