@@ -1,7 +1,8 @@
 import type { Settings } from '~/models'
-import { isVideoUrl, waitUntil } from '~/utils'
+import { isVideoUrl } from '~/utils'
 
 let settings: Settings
+let timer: number
 
 const init = async () => {
   if (!isVideoUrl()) {
@@ -12,31 +13,30 @@ const init = async () => {
     return
   }
 
-  // Wait a moment as the chat opens automatically
-  await new Promise<void>((r) => setTimeout(() => r(), 1000))
+  clearInterval(timer)
 
-  try {
-    await waitUntil(() => {
-      const el = document.querySelector<HTMLElement>('#chat')
-      if (!el) {
-        return false
-      }
-      const hidden = el.hasAttribute('hide-chat-frame')
-      if (!hidden) {
-        return false
-      }
-      const button = document.querySelector<HTMLElement>(
-        'yt-video-metadata-carousel-view-model',
-      )
-      if (!button) {
-        return false
-      }
-      button.click()
-      return true
-    })
-  } catch {
-    // noop
-  }
+  const expireTime = Date.now() + 3000
+  timer = setInterval(() => {
+    if (Date.now() > expireTime) {
+      return
+    }
+
+    const el = document.querySelector<HTMLElement>('#chat')
+    if (!el) {
+      return false
+    }
+    const hidden = el.hasAttribute('hide-chat-frame')
+    if (!hidden) {
+      return false
+    }
+    const button = document.querySelector<HTMLElement>(
+      'yt-video-metadata-carousel-view-model',
+    )
+    if (!button) {
+      return false
+    }
+    button.click()
+  }, 500)
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
