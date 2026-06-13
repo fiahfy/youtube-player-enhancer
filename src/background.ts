@@ -6,6 +6,9 @@ const getSettings = async () => {
   try {
     const key = `persist:${persistConfig.key}`
     const json = (await chrome.storage.local.get(key))[key]
+    if (typeof json !== 'string') {
+      return initialSettings
+    }
     const rootState = JSON.parse(json)
     return JSON.parse(rootState.settings)
   } catch {

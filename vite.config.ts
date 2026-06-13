@@ -2,7 +2,6 @@ import { crx, defineManifest } from '@crxjs/vite-plugin'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import zip from 'vite-plugin-zip-pack'
-import tsconfigPaths from 'vite-tsconfig-paths'
 import packageJson from './package.json'
 
 const { description, version, productName } = packageJson
@@ -40,8 +39,12 @@ const manifest = defineManifest({
   host_permissions: ['https://www.youtube.com/*'],
 })
 
+// TODO: https://github.com/crxjs/chrome-extension-tools/issues/1145
 export default defineConfig({
-  plugins: [react(), crx({ manifest }), zip(), tsconfigPaths()],
+  plugins: [react(), crx({ manifest }), zip()],
+  resolve: {
+    tsconfigPaths: true,
+  },
   server: {
     cors: {
       origin: [/chrome-extension:\/\//],
