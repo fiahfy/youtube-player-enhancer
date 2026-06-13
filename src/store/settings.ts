@@ -11,6 +11,7 @@ type State = Settings
 export const initialState: State = {
   autoCloseLiveChatPoll: false,
   autoShowLiveChat: false,
+  enableFollowLatestButton: false,
   enableReloadButton: false,
   enableSkipControls: false,
   preventTimestampScroll: false,
@@ -25,6 +26,9 @@ export const settingsSlice = createSlice({
     },
     setAutoCloseLiveChatPoll(state, action: PayloadAction<boolean>) {
       return { ...state, autoCloseLiveChatPoll: action.payload }
+    },
+    setEnableFollowLatestButton(state, action: PayloadAction<boolean>) {
+      return { ...state, enableFollowLatestButton: action.payload }
     },
     setEnableReloadButton(state, action: PayloadAction<boolean>) {
       return { ...state, enableReloadButton: action.payload }
@@ -41,6 +45,7 @@ export const settingsSlice = createSlice({
 export const {
   setAutoCloseLiveChatPoll,
   setAutoShowLiveChat,
+  setEnableFollowLatestButton,
   setEnableReloadButton,
   setEnableSkipControls,
   setPreventTimestampScroll,
@@ -58,6 +63,11 @@ export const selectAutoCloseLiveChatPoll = createSelector(
 export const selectAutoShowLiveChat = createSelector(
   selectSettings,
   (settings) => settings.autoShowLiveChat,
+)
+
+export const selectEnableFollowLatestButton = createSelector(
+  selectSettings,
+  (settings) => settings.enableFollowLatestButton,
 )
 
 export const selectEnableReloadButton = createSelector(

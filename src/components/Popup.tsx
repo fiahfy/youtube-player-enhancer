@@ -16,11 +16,13 @@ import { useAppDispatch, useAppSelector } from '~/store'
 import {
   selectAutoCloseLiveChatPoll,
   selectAutoShowLiveChat,
+  selectEnableFollowLatestButton,
   selectEnableReloadButton,
   selectEnableSkipControls,
   selectPreventTimestampScroll,
   setAutoCloseLiveChatPoll,
   setAutoShowLiveChat,
+  setEnableFollowLatestButton,
   setEnableReloadButton,
   setEnableSkipControls,
   setPreventTimestampScroll,
@@ -29,6 +31,9 @@ import {
 const App = () => {
   const autoCloseLiveChatPoll = useAppSelector(selectAutoCloseLiveChatPoll)
   const autoShowLiveChat = useAppSelector(selectAutoShowLiveChat)
+  const enableFollowLatestButton = useAppSelector(
+    selectEnableFollowLatestButton,
+  )
   const enableReloadButton = useAppSelector(selectEnableReloadButton)
   const enableSkipControls = useAppSelector(selectEnableSkipControls)
   const preventTimestampScroll = useAppSelector(selectPreventTimestampScroll)
@@ -44,6 +49,13 @@ const App = () => {
   const handleChangeAutoShowLiveChat = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.checked
     dispatch(setAutoShowLiveChat(value))
+  }
+
+  const handleChangeEnableFollowLatestButton = (
+    e: ChangeEvent<HTMLInputElement>,
+  ) => {
+    const value = e.currentTarget.checked
+    dispatch(setEnableFollowLatestButton(value))
   }
 
   const handleChangeEnableReloadButton = (e: ChangeEvent<HTMLInputElement>) => {
@@ -93,6 +105,17 @@ const App = () => {
             </Typography>
           </FormLabel>
           <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={enableFollowLatestButton}
+                  onChange={handleChangeEnableFollowLatestButton}
+                  size="small"
+                />
+              }
+              label="Add follow latest button"
+              slotProps={{ typography: { variant: 'body2' } }}
+            />
             <FormControlLabel
               control={
                 <Switch

@@ -1,0 +1,4 @@
+.ype-following-latest-button.ype-button-active button {
+  /* biome-ignore lint/complexity/noImportantStyles: false positive */
+  color: var(--paper-toggle-button-checked-button-color) !important;
+}

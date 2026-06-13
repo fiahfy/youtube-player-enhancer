@@ -1,9 +1,11 @@
-import refresh from '~/assets/refresh.svg?raw'
+import verticalAlignBottom from '~/assets/vertical_align_bottom.svg?raw'
 import type { Settings } from '~/models'
 import { querySelectorAsync } from '~/utils'
 
-const className = 'ype-reload-button'
+const className = 'ype-following-latest-button'
+const activeClassName = 'ype-button-active'
 let settings: Settings
+let timer: number
 
 const addButton = async () => {
   const refButtons = document.querySelectorAll(
@@ -41,14 +43,15 @@ const addButton = async () => {
   // Setup elements
 
   wrapper.classList.add(className)
-  wrapper.title = 'Reload Frame'
-  wrapper.onclick = () => location.reload()
+  wrapper.title = 'Follow Latest'
+  wrapper.onclick = () =>
+    chrome.runtime.sendMessage({ type: 'follow-latest-button-clicked' })
 
   const div = button.querySelector('.yt-icon-shape > div')
   if (!div) {
     return
   }
-  div.innerHTML = refresh
+  div.innerHTML = verticalAlignBottom
   const svg = button.querySelector('svg')
   if (!svg) {
     return
@@ -81,7 +84,35 @@ const removeButton = () => {
 }
 
 const init = async () => {
-  settings.enableReloadButton ? await addButton() : removeButton()
+  settings.enableFollowLatestButton ? await addButton() : removeButton()
+}
+
+const update = async (enableFollowLatest: boolean) => {
+  const button = document.querySelector(`.${className}`)
+  if (button) {
+    if (enableFollowLatest) {
+      button.classList.add(activeClassName)
+    } else {
+      button.classList.remove(activeClassName)
+    }
+  }
+
+  if (enableFollowLatest) {
+    const scrollToBottom = () => {
+      const hovered = !!document.querySelector('#chat:hover')
+      if (hovered) {
+        return
+      }
+      const scroller = document.querySelector('#item-scroller')
+      if (scroller) {
+        scroller.scrollTop = scroller.scrollHeight
+      }
+    }
+    scrollToBottom()
+    timer = window.setInterval(scrollToBottom, 1000)
+  } else {
+    clearInterval(timer)
+  }
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
@@ -91,10 +122,14 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       settings = data.settings
       init().then(() => sendResponse())
       return true
+    case 'tab-state-changed':
+      update(data.tabState.enableFollowLatest).then(() => sendResponse())
+      return true
   }
 })
 
 chrome.runtime.sendMessage({ type: 'content-loaded' }).then(async (data) => {
   settings = data.settings
   await init()
+  await update(data.tabState.enableFollowLatest)
 })
