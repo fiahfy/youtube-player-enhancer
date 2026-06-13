@@ -8,6 +8,7 @@
 
 - Adds skip controls to the player control bar.
 - Adds a reload button to the live chat menu.
+- Adds a "Follow Latest" button to keep the live chat scrolled to the newest messages.
 - Prevents the page from scrolling when clicking timestamps.
 - Automatically opens the live chat when it is closed.
 - Automatically closes polls in the live chat.
